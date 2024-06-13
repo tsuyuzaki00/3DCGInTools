@@ -2,15 +2,23 @@
 - [x] 編集中
 - [ ] 編集済み
 
-3DCGツールMayaで使用するスクリプトフォルダ
-## もくじ
-[__defSetProject](../_document/__defSetProject.md)  
-[_setting](./_settings/README.md)  
-[execute](./execute/README.md)  
+3DCGツールMayaで使用するスクリプトフォルダ  
+
+## テンプレートフォルダ
+
+\_\_defSetProject  
+Mayaのデフォルトで作成されるプロジェクトフォルダのコピー元
+
+writeRun  
+お試しでPythonファイルを実行するフォルダ
+
+[_setup](./_setup/README.md)  
+
 [library](./library/README.md)  
-[manager](./manager/README.md)  
-[option](./option/README.md)  
-[setup](./setup/README.md)  
+
+## オブジェクトフォルダ
+
+
 
 ---
 [back](../README.md)

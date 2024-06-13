@@ -3,34 +3,33 @@
 - [x] 編集済み
 
 ## README.md=もくじ 
-## 各フォルダの定義
+## テンプレートフォルダ
 
-[\_document](./_document/README.md)  
-全体で使用するマニュアルをまとめるフォルダ
-
-[\_menu](./_menu/README.md)  
-上部メニューに表示させるフォルダ
-
-[\_settings](./_settings/README.md)  
-libraryの初期設定をするフォルダ
-
-[execute](./execute/README.md)  
-直接Pythonを実行するフォルダ
+[\_start](./_start/README.md)  
+最初に読む内容をまとめるフォルダ
 
 [library](./library/README.md)  
 どのツールでも使用するスクリプトをまとめているフォルダ
 
+[ui](./ui/README.md)  
+どのDCCツールでも使えるUIファイルを格納するフォルダ
+
+## アプリケーションフォルダ
+
 [blender](./blender/README.md)  
 3DCGツールBlenderで使用するスクリプトフォルダ
+
+[houdini](./houdini/README.md)  
+3DCGツールHoudiniで使用するスクリプトフォルダ
 
 [maya](./maya/README.md)  
 3DCGツールMayaで使用するスクリプトフォルダ
 
+[mgear](./mgear/README.md)  
+3DCGツールMaya内に組み込むリグツールで使用するスクリプトフォルダ
+
 [sourceTrail](./sourceTrail/README.md)  
 スクリプトの参照、継承の流れが見えるアプリケーションsourceTrailのフォルダ
 
-[ui](./ui/README.md)  
-どのDCCツールでも使えるUIファイルを格納するフォルダ
-
-[\_\_init\_\_.py](./_document/init.md)  
+[\_\_init\_\_.py](./_start/document/init.md)  
 import cgInTools as cit で主に使用しているファイル

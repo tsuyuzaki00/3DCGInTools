@@ -2,21 +2,19 @@
 - [x] 編集中
 - [ ] 編集済み
 
-よく使う関数をまとめているファイル群
+Mayaで使用するクラスをまとめているフォルダ
 
-## もくじ
+## オブジェクトクラス
 
-### 用語定義
+[dataLB]()
 
-[library]()
+[selfLB]()
 
-### Operating Class
-
-[objectLB](/maya/library/_document/objectLB.md)
+## ライブラリクラス
 
 [attributeLB](/maya/library/_document/attributeLB.md)
 
-[blendshapeLB](/maya/library/_document/blendshapeLB.md)
+[blendShapeLB](/maya/library/_document/blendshapeLB.md)
 
 [checkLB](/maya/library/_document/checkLB.md)
 
@@ -55,10 +53,6 @@
 [ribbonLB](/maya/library/_document/ribbonLB.md)
 
 [skinLB](/maya/library/_document/skinLB.md)
-
-### Base object class
-
-[setBaseLB](/maya/library/_document/setBaseLB.md)
 
 ---
 [back](../README.md)
