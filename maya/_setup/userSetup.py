@@ -13,8 +13,8 @@ cgInToolsData_dir=os.path.join(wrk_path,"scripts",folder_str)
 cgInToolsData_dir=cgInToolsData_dir.replace(os.sep,'/')
 os.environ['MAYACGINTOOLSDATA_DIRECTORY']=cgInToolsData_dir
 
-from cgInTools.maya.execute import mayaMenuEX
-utils.executeDeferred(mayaMenuEX.main)
+from cgInTools.maya.menuBar import menuBarEX
+utils.executeDeferred(menuBarEX.main)
 
 if int(sys.version[0]) == 2:
     try:

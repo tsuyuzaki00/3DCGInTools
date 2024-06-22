@@ -11,8 +11,8 @@ from ...library import pathLB as pLB
 from . import cleanLB as cLB
 cit.reloads([fLB,pLB,dLB,cLB])
 
-RULE_DICT=fLB.readJson(cit.mayaSettings_dir,"rules","library")
-PROJECTFOLDER=cit.mayaDefSetProject_dir
+#RULE_DICT=fLB.readJson(cit.mayaSettings_dir,"rules","library")
+#PROJECTFOLDER=cit.mayaDefSetProject_dir
 
 class AppProject(object):
     def __init__(self):

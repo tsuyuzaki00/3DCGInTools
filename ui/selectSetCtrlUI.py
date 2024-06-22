@@ -1,9 +1,12 @@
-#!/usr/bin/python
 # -*- coding: iso-8859-15 -*-
-
-from PySide2.QtCore import *
-from PySide2.QtWidgets import *
-from PySide2.QtGui import *
+try:
+    from PySide2.QtCore import *
+    from PySide2.QtWidgets import *
+    from PySide2.QtGui import *
+except ImportError:
+    from PySide6.QtCore import *
+    from PySide6.QtWidgets import *
+    from PySide6.QtGui import *
 
 from ._reference import mainWindowUI as UI
 

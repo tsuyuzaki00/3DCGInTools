@@ -6,7 +6,7 @@ cit.reloads([bLB])
 
 class DataPath(bLB.DataOrigin):
     def __init__(self,dataPath=None):
-        super(DataPath,self).__init__()
+        super().__init__()
         if dataPath is None:
             self._absolute_dir=None
             self._relative_dir=None

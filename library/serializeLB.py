@@ -15,9 +15,9 @@ class AppSerialize(object):
             object_SelfObject=pickle.load(f)
             return object_SelfObject
 
-    def serialize_create_func(self,path,object):
+    def serialize_create_func(self,path,obj):
         with open(path,'wb') as f:
-            pickle.dump(object,f)
+            pickle.dump(obj,f)
 
     #Setting Function
     def setDataPath(self,variable):

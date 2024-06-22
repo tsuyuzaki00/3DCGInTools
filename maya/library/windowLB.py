@@ -1,10 +1,14 @@
 # -*- coding: iso-8859-15 -*-
-from PySide2.QtWidgets import *
+try:
+    from PySide2.QtWidgets import *
+    from shiboken2 import wrapInstance
+except ImportError:
+    from PySide6.QtWidgets import *
+    from shiboken6 import wrapInstance
 
 import os
 import maya.cmds as cmds
 from maya import OpenMayaUI as omui
-from shiboken2 import wrapInstance
 from maya.app.general.mayaMixin import MayaQWidgetDockableMixin
 
 # mayaのメインウインドウを取得する

@@ -5,8 +5,8 @@ cit.reloads([dLB,sLB])
         
 def main(readFile_str="init"):
     menu_DataPath=dLB.DataPath()
-    menu_DataPath.setAbsoluteDirectory(cit.mayaSettings_dir)
-    menu_DataPath.setRelativeDirectory("mayaMenu")
+    menu_DataPath.setAbsoluteDirectory(cit.maya_dir)
+    menu_DataPath.setRelativeDirectory("menuBar")
     menu_DataPath.setFile(readFile_str)
     menu_DataPath.setExtension("mayaMenu")
 

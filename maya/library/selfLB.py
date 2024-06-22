@@ -10,7 +10,7 @@ cit.reloads([bLB,dLB,mmLB,nLB,naLB,pjLB])
 
 class SelfMenu(bLB.SelfOrigin):
     def __init__(self,selfObject=None):
-        super(SelfMenu,self).__init__(selfObject)
+        super().__init__(selfObject)
         if selfObject is None:
             self._menu_DataMenu=None
         elif isinstance(selfObject,SelfMenu):
