@@ -2,8 +2,6 @@
 - [x] 編集中
 - [ ] 編集済み
 
-[玄人向け(professional)](./_professional/_template.md)
-
 ## クラス一覧
 class [Class001(object)](#class-class001-page)   
 class [Class002(object)](#class-class002-page)  
@@ -28,6 +26,21 @@ None
 >Summary :  
 Class001のざっくりした内容を書く
 
+## Special Function
+def [\_\_init\_\_()](#class001__init__)
+
+## Single Function
+def [single_mode_func()](#class001single_mode_func)  
+
+## Multi Function
+def [\_multi_mode_func()](#class001_multi_mode_func)  
+
+## Inheritance Function
+def [\_inheritance_mode_func()](#class001_inheritance_mode_func)  
+
+## Private Function
+def [\_\_private_mode_func()](#class001__private_mode_func)  
+
 ## Setting Function
 def [setSetting()](#class001setsetting)  
 def [addSetting()](#class001addsetting)  
@@ -50,6 +63,20 @@ def [public()](#class001public)
 >Summary :  
 Class002のざっくりした内容を書く  
 
+## Special Function
+def [\_\_init\_\_()](#class002__init__)
+## Single Function
+def [single_mode_func()](#class002single_mode_func)  
+
+## Multi Function
+def [\_multi_mode_func()](#class002_multi_mode_func)  
+
+## Inheritance Function
+def [\_inheritance_mode_func()](#class002_inheritance_mode_func)  
+
+## Private Function
+def [\_\_private_mode_func()](#class002__private_mode_func)  
+
 ## Setting Function
 def [setSetting()](#class002setsetting)  
 def [addSetting()](#class002addsetting)  
@@ -70,6 +97,20 @@ None
 >Summary :  
 とくになし
 
+## Special Function
+None
+## Single Function
+None
+
+## Multi Function
+None
+
+## Inheritance Function
+None
+
+## Private Function
+None
+
 ## Setting Function
 None
 
@@ -79,6 +120,74 @@ None
 ---
 
 # class Class001
+## Special Function
+### Class001.\_\_init\_\_()
+>Signature :  
+instance=Class001()  
+\_localVariable_value=None  
+
+>Parameters :  
+None
+
+>Returns :  
+None
+
+>Description :  
+\_localVariable_value - 変数の説明を書く  
+## Single Function
+### Class001.single_mode_func()
+>Signature :  
+single_mode_func()
+
+>Parameters :  
+None
+
+>Returns :  
+None
+
+>Description :  
+単独でも使用できる関数
+## Multi Function
+### Class001.\_multi_mode_func()
+>Signature :  
+\_multi_mode_func()
+
+>Parameters :  
+None
+
+>Returns :  
+None
+
+>Description :  
+single_mode_func()関数が内部にある関数
+
+## Inheritance Function
+### Class001.\_inheritance_mode_func()
+>Signature :  
+\_inheritance_mode_func()
+
+>Parameters :  
+None
+
+>Returns :  
+None
+
+>Description :  
+継承や合成(委譲)した関数が内部にある関数
+
+## Private Function
+### Class001.\_\_private_mode_func()
+>Signature :  
+\_\_private_mode_func()
+
+>Parameters :  
+None
+
+>Returns :  
+None  
+
+>Description :  
+継承や合成(委譲)した際に使用されないようにする関数
 
 ## Setting Function
 ### Class001.setSetting()
@@ -156,6 +265,76 @@ set関数に設定していれば何も変数を入れずに実行し
 ---
 
 # class Class002
+## Special Function
+### Class002.\_\_init\_\_()
+>Signature :  
+instance=Class002()  
+\_localVariable_value=None  
+
+>Parameters :  
+None
+
+>Returns :  
+None
+
+>Description :  
+\_localVariable_value - 変数の説明を書く  
+## Single Function
+### Class002.single_mode_func()
+>Signature :  
+single_mode_func()  
+
+>Parameters :  
+None
+
+>Returns :  
+None
+
+>Description :  
+単独でも使用できる関数
+
+## Multi Function
+### Class002.\_multi_mode_func()
+>Signature :  
+\_multi_mode_func()
+
+>Parameters :  
+None
+
+>Returns :  
+None
+
+>Description :  
+single_mode_func()関数が内部にある関数
+
+## Inheritance Function
+### Class002.\_inheritance_mode_func()
+>Signature :  
+\_inheritance_mode_func()
+
+>Parameters :  
+None
+
+>Returns :  
+None
+
+>Description :  
+継承や合成(委譲)した関数が内部にある関数
+
+## Private Function
+### Class002.\_\_private_mode_func()
+>Signature :  
+\_\_private_mode_func()
+
+>Parameters :  
+None
+
+>Returns :  
+None  
+
+>Description :  
+継承や合成(委譲)した際に使用されないようにする関数
+
 ## Setting Function
 ### Class002.setSetting()
 >Signature :  
@@ -251,4 +430,5 @@ None
 None
 
 ---
-[back](README.md) [Top](#_template)
+
+[back](../README.md) [Top](#_template)

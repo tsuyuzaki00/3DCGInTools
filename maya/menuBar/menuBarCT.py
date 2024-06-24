@@ -5,7 +5,7 @@ from ..library import selfLB as msLB
 import cgInTools as cit
 cit.reloads([jLB,dLB,mdLB,msLB])
 
-def main(readFile_str="init",writeFile_str="init",extension_ext="mayaMenu"):
+def main(readFile_str="menuBarCT",writeFile_str="menuBarEX",extension_ext="mayaMenu"):
     read_DataPath=dLB.DataPath()
     read_DataPath.setAbsoluteDirectory(cit.maya_dir)
     read_DataPath.setRelativeDirectory("menuBar")

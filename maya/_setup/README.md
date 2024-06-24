@@ -8,11 +8,11 @@
 
 [インストール原理]()
 
-modules はC:\\Users\\"user_name"\\Documents\\maya
+modules はC:\\Users\\<"user_name">\\Documents\\maya
     
 modに読み込んでほしいパスを書く
     
-例 + CustomTools 1 D:/Maya (オンオフ なんでもいい名前 番号 パス名)
+例 + CustomTools 1 D:/Maya (オンオフ 自由な名前 番号 パス名)
 
 userSetup はscripts内の階層
 

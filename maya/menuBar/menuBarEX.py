@@ -3,7 +3,7 @@ from ...library import dataLB as dLB
 from ..library import selfLB as sLB
 cit.reloads([dLB,sLB])
         
-def main(readFile_str="init"):
+def main(readFile_str="menuBarEX"):
     menu_DataPath=dLB.DataPath()
     menu_DataPath.setAbsoluteDirectory(cit.maya_dir)
     menu_DataPath.setRelativeDirectory("menuBar")

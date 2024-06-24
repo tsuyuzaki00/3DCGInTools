@@ -9,12 +9,17 @@
 \_\_defSetProject  
 Mayaのデフォルトで作成されるプロジェクトフォルダのコピー元
 
-writeRun  
-お試しでPythonファイルを実行するフォルダ
+\_\_objectCopy  
+新しくScriptsを作成する際のコピー元
+
+\_writeRun  
+お試しでPythonファイルを実行しているフォルダ
 
 [_setup](./_setup/README.md)  
+cgInTools.mayaを使用する際の設定方法とそのファイル
 
 [library](./library/README.md)  
+mayaの機能をまとめたライブラリ
 
 ## オブジェクトフォルダ
 
