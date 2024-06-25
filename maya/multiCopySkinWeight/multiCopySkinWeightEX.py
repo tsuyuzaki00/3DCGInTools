@@ -6,17 +6,17 @@ from ..library import skinLB as sLB
 cit.reloads([sLB])
 
 def main():
-    objs=cmds.ls(sl=True,l=True)
-    if len(objs) < 2:
+    node_strs=cmds.ls(sl=True,l=True)
+    if len(node_strs) < 2:
         cmds.warning("At less 2 objects must be selected")
         return None
     else:
-        source=objs[0]
-        targets=objs[1:]
+        sourceNode_str=node_strs[0]
+        targetNode_strs=node_strs[1:]
 
-    copy=sLB.CopySkinWeight()
-    copy.setSourceNode(source)
-    for target in targets:
-        copy.setTargetNode(target)
-        copy.copyBind()
-        copy.copySkinWeights()
+    multiCopy_AppCopySkinWeight=sLB.AppCopySkinWeight()
+    multiCopy_AppCopySkinWeight.setSourceNodeName(sourceNode_str)
+    for targetNode_str in targetNode_strs:
+        multiCopy_AppCopySkinWeight.setTargetNodeName(targetNode_str)
+        multiCopy_AppCopySkinWeight.copyBind()
+        multiCopy_AppCopySkinWeight.copySkinWeights()

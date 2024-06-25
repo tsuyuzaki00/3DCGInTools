@@ -1,1 +1,1 @@
-"C:/Program Files/Autodesk/Maya2022/bin/mayabatch.exe" -command "python(\"from cgInTools.maya.execute import saveEX as EX; EX.main()\")"
+"C:/Program Files/Autodesk/Maya2022/bin/mayabatch.exe" -command "python(\"from cgInTools.maya.sceneSave import sceneSaveEX as EX; EX.main()\")"

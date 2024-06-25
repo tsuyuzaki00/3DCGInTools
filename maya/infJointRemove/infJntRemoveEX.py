@@ -6,7 +6,7 @@ from ..library import skinLB as sLB
 cit.reloads([sLB])
 
 def main():
-    obj=cmds.ls(sl=True)[0]
-    removeJoint=sLB.CopySkinWeight()
-    removeJoint.setSourceNode(obj)
+    node_str=cmds.ls(sl=True)[0]
+    removeJoint=sLB.AppCopySkinWeight()
+    removeJoint.setSourceNodeName(node_str)
     removeJoint.removeInfluenceJoint()

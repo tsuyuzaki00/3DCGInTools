@@ -6,9 +6,9 @@ from ..library import skinLB as sLB
 cit.reloads([sLB])
 
 def main():
-    objs=cmds.ls(sl=True)
-    renameSkc=sLB.CopySkinWeight()
-    for obj in objs:
-        cluster_node=renameSkc.geoSkinCluster_query_str(obj)
-        fix_str=renameSkc.clusterRename_create_str(obj)
-        cmds.rename(cluster_node,fix_str)
+    node_strs=cmds.ls(sl=True)
+    renameSkc=sLB.AppCopySkinWeight()
+    for node_str in node_strs:
+        skc_str=renameSkc.geoSkinCluster_query_str(node_str)
+        fix_str=renameSkc.clusterRename_create_str(node_str)
+        cmds.rename(skc_str,fix_str)

@@ -10,7 +10,7 @@ def main():
     targetNodes=cmds.ls(sl=True)[1:]
 
     replace=cLB.EditCurve()
-    replace.setSourceNode(sourceNode)
+    replace.setSourceNodeName(sourceNode)
     for targetNode in targetNodes:
         replace.setTargetNode(targetNode)
         replace.replaceShape()

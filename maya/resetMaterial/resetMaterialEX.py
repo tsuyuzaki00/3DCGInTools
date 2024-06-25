@@ -2,10 +2,10 @@
 import maya.cmds as cmds
 
 import cgInTools as cit
-from ..library import cleanLB as cLB
-cit.reloads([cLB])
+from . import resetMaterialLB as rmLB
+cit.reloads([rmLB])
 
 def main():
-    objs = cmds.ls(sl=True)
-    for obj in objs:
-        cLB.defaultMaterial_edit_func(obj)
+    node_strs=cmds.ls(sl=True)
+    for node_str in node_strs:
+        rmLB.defaultMaterial_edit_func(node_str)

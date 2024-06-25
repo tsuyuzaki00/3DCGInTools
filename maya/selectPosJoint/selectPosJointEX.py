@@ -6,11 +6,11 @@ from cgInTools.maya.library import jointLB as jntLB
 cit.reloads([jntLB])
 
 def main():
-    objs=cmds.ls(sl=True)
-    if objs == []:
+    node_strs=cmds.ls(sl=True)
+    if node_strs == []:
         jntLB.jointOnly()
         cmds.select(cl=True)
     else :
-        for obj in objs:
-            trs=cmds.xform(obj,q=True,ws=True,t=True)
+        for node_str in node_strs:
+            trs=cmds.xform(node_str,q=True,ws=True,t=True)
             jntLB.jointOnly(p=trs)

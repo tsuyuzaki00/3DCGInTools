@@ -2,10 +2,12 @@
 import maya.cmds as cmds
 
 import cgInTools as cit
-from ..library import cleanLB as cLB
-cit.reloads([cLB])
+from ..library import sceneCleanLB as scLB
+cit.reloads([scLB])
 
 def main():
-    objs=cmds.ls(sl=True,dag=True,tr=True)
-    for obj in objs:
-        cLB.delFRHThree_edit_func(obj)
+    node_strs=cmds.ls(sl=True,dag=True,tr=True)
+    for node_str in node_strs:
+        FRH_AppSceneClean=scLB.AppSceneClean()
+        FRH_AppSceneClean.setNodeName(node_str)
+        FRH_AppSceneClean.delFRH()
