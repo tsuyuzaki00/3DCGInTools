@@ -31,13 +31,11 @@ ui_dir=os.path.join(root_dir,"ui")
 
 maya_dir=os.path.join(root_dir,"maya")
 mayaDefSetProject_dir=os.path.join(maya_dir,"__defSetProject")
-mayaSettings_dir=os.path.join(maya_dir,"library","_settings")
 mayaLibrary_dir=os.path.join(maya_dir,"library")
 mayaSetup_dir=os.path.join(maya_dir,"setup")
 mayaData_dir=os.environ.get("MAYACGINTOOLSDATA_DIRECTORY")
 
 mgear_dir=os.path.join(maya_dir,"mgear")
-mgearSettings_dir=os.path.join(mgear_dir,"library","_settings")
 mgearLibrary_dir=os.path.join(mgear_dir,"library")
 mgearSetup_dir=os.path.join(mgear_dir,"setup")
 mgearData_dir=os.environ.get("MGEARCGINTOOLSDATA_DIRECTORY")

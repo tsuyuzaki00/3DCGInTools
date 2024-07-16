@@ -1,5 +1,4 @@
 # -*- coding: iso-8859-15 -*-
-
 class SuperClass(object):
     def __init__(self):
         self._superValue=""

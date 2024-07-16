@@ -4,7 +4,7 @@ import cgInTools as cit
 from . import pathLB as pLB
 cit.reloads([pLB])
 
-class AppJson(object):
+class AppJson():
     def __init__(self):
         self._path_DataPath=None
         self._json_dict={}

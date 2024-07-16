@@ -58,3 +58,15 @@ class DataPath(bLB.DataOrigin):
         return self._extension_ext
     def getExtension(self):
         return self._extension_ext
+
+    #Public Function
+    def readDict(self,setting_dict=None):
+        _setting_dict=setting_dict or self._setting_dict
+
+        self.setAbsoluteDirectory(_setting_dict.get("AbsoluteDirectory"))
+        self.setRelativeDirectory(_setting_dict.get("RelativeDirectory"))
+        self.setFile(_setting_dict.get("File"))
+        self.setExtension(_setting_dict.get("ExtensetExtension"))
+
+    def readXML(self,dataPath=None):
+        _origin_DataPath=dataPath or self._origin_DataPath

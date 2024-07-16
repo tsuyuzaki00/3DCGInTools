@@ -1,3 +1,3 @@
 import cgInTools as cit
-from cgInTools.maya.menuBar import menuBarCT as ps
+from maya.library import _test as ps
 cit.reloads([ps]); ps.main()

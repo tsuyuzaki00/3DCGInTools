@@ -3,7 +3,7 @@ import maya.api.OpenMaya as om2
 import maya.api.OpenMayaAnim as oma2
 import sys,math
 
-class AppOpenMayaBase(object):
+class AppOpenMayaBase():
     def __init__(self):
         pass
     

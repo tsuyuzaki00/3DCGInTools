@@ -7,8 +7,6 @@ import cgInTools as cit
 from ...library import baseLB as bLB
 cit.reloads([bLB])
 
-from ...library.dataLB import *
-
 #Definition Data
 class DataMenuParam(bLB.DataOrigin):
     def __init__(self,*dataTuple):
@@ -1526,6 +1524,7 @@ class DataMenu(bLB.DataOrigin):
                 self._menuName_str=dataTuple[0].getName()
                 self._menu_DataMenuParamArrays=dataTuple[0].getDataMenuParamArrays()
 
+    #Setting Function
     def setName(self,variable):
         self._menuName_str=variable
         return self._menuName_str
@@ -1540,6 +1539,17 @@ class DataMenu(bLB.DataOrigin):
         return self._menu_DataMenuParamArrays
     def getDataMenuParamArrays(self):
         return self._menu_DataMenuParamArrays
+    
+    #Public Function
+    def readJson(self):
+        pass
+    def writeJson(self):
+        pass
+    
+    def readXML(self):
+        pass
+    def writeXML(self):
+        pass
 
 class DataNode(bLB.DataOrigin):
     def __init__(self,*dataTuple):

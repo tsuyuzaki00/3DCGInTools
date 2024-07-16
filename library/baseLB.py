@@ -1,19 +1,35 @@
 # -*- coding: iso-8859-15 -*-
+from abc import ABC,abstractmethod
+import inspect
+
 import cgInTools as cit
 from . import serializeLB as sLB
 from . import jsonLB as jLB
-cit.reloads([sLB,jLB])
+from . import xmlLB as xLB
+cit.reloads([sLB,jLB,xLB])
 
-class DataOrigin(object):
+class DataOrigin(ABC):
     def __init__(self,*dataTuple):
+        self.__setting_strs=self.__isSetGetFunction_query_strs()
+        self._setting_dict=None
+        from . import dataLB as dLB
         if (0 == len(dataTuple) or 
             2 <= len(dataTuple)):
             self._origin_DataPath=None
-            self._dataChoice_strs=[]
         elif 1 == len(dataTuple):
-            if isinstance(dataTuple[0],DataOrigin):
+            if isinstance(dataTuple[0],dLB.DataPath):
+                self._origin_DataPath=dataTuple[0]
+            elif isinstance(dataTuple[0],DataOrigin):
                 self._origin_DataPath=dataTuple[0].getOriginDataPath()
-                self._dataChoice_strs=dataTuple[0].getDataChoiceStrs()
+    
+    #Private Function
+    def __isSetGetFunction_query_strs(self):
+        setting_strs=[
+            m[0].replace("get","")
+            for m in inspect.getmembers(self,predicate=inspect.ismethod)
+            if m[0].startswith("get") and m[0] is not "getSettingDict"
+        ]
+        return setting_strs
 
     #Setting Function
     def setOriginDataPath(self,variable):
@@ -21,26 +37,25 @@ class DataOrigin(object):
         return self._origin_DataPath
     def getOriginDataPath(self):
         return self._origin_DataPath
-    
-    def setDataChoiceStrs(self,variables):
-        self._dataChoice_strs=variables
-        return self._dataChoice_strs
-    def addDataChoiceStrs(self,variables):
-        self._dataChoice_strs+=variables
-        return self._dataChoice_strs
-    def getDataChoiceStrs(self):
-        return self._dataChoice_strs
-    
-    #Public Function
-    def writeDict(self,dataChoices=None):
-        _dataChoice_strs=dataChoices or self._dataChoice_strs
 
+    def setSettingDict(self,variable):
+        self._setting_dict=variable
+        return self._setting_dict
+    def getSettingDict(self):
+        return self._setting_dict
+
+    #Public Function
+    @abstractmethod
+    def readDict(self,setting_dict=None):
+        pass
+    
+    def writeDict(self):
         write_dict={}
-        for _dataChoice_str in _dataChoice_strs:
-            _dataChoice_str=_dataChoice_str[0].upper()+_dataChoice_str[1:]
-            variable=eval('self.get'+_dataChoice_str+'()')
+        for __setting_str in self.__setting_strs:
+            setting_str=__setting_str[0].upper()+__setting_str[1:]
+            variable=eval('self.get'+setting_str+'()')
             if type(variable) in (bool,int,float,str) or variable is None:
-                write_dict[_dataChoice_str]=variable
+                write_dict[setting_str]=variable
             elif type(variable) in (list,tuple):
                 variables=[]
                 for v in variable:
@@ -48,22 +63,51 @@ class DataOrigin(object):
                         variables.append(v)
                     else:
                         variables.append(v.writeDict())
-                write_dict[_dataChoice_str]=variables
+                write_dict[setting_str]=variables
             else:
-                write_dict[_dataChoice_str]=variable.writeDict()
+                write_dict[setting_str]=variable.writeDict()
         return write_dict
-    
-    def writeJson(self,dataPath=None,dataChoices=None):
+
+    @abstractmethod
+    def readXML(self,dataPath=None):
+        pass
+
+    def writeXML(self,dataPath=None):
+        pass
+
+    def readJson(self,dataPath=None):
         _origin_DataPath=dataPath or self._origin_DataPath
-        _dataChoice_strs=dataChoices or self._dataChoice_strs
 
-        json_dict=self.writeDict(_dataChoice_strs)
-        json_AppJson=jLB.AppJson()
-        json_AppJson.setDataPath(_origin_DataPath)
-        json_AppJson.setJsonDict(json_dict)
-        json_AppJson.write()
+        read_AppJson=jLB.AppJson()
+        read_AppJson.setDataPath(_origin_DataPath)
+        read_dict=read_AppJson.read()
+        self.readDict(read_dict)
 
-class SelfOrigin(object):
+    def writeJson(self,dataPath=None):
+        _origin_DataPath=dataPath or self._origin_DataPath
+        
+        write_AppJson=jLB.AppJson()
+        write_AppJson.setDataPath(_origin_DataPath)
+        write_AppJson.setJsonDict(self.writeDict())
+        write_AppJson.write()
+
+    def readData(self,dataPath=None):
+        _origin_DataPath=dataPath or self._origin_DataPath
+
+        selfpy_SelfSerialize=sLB.AppSerialize()
+        selfpy_SelfSerialize.setDataPath(_origin_DataPath)
+        selfpy_SelfObject=selfpy_SelfSerialize.read()
+        self.__init__(selfpy_SelfObject)
+
+    def writeData(self,dataPath=None):
+        _origin_DataPath=dataPath or self._origin_DataPath
+
+        selfpy_SelfSerialize=sLB.AppSerialize()
+        selfpy_SelfSerialize.setDataPath(_origin_DataPath)
+        selfpy_SelfSerialize.setWriteSelfObject(self)
+        selfpy_SelfSerialize.write()
+
+class SelfOrigin(ABC):
     def __init__(self,selfObject=None):
         if selfObject is None:
             self._origin_DataPath=None

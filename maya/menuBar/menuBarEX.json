@@ -27,14 +27,14 @@
                 },
                 {
                     "Label":"Loaded 3DCONNEXION",
-                    "FromFolder":"cgInTools.maya.execute",
+                    "FromFolder":"cgInTools.maya.threeDconnexionLoad",
                     "ImportFile":"threeDconnexionLoadEX",
                     "Function":"main()",
                     "Icon":""
                 },
                 {
                     "Label":"VSCode MayaPort",
-                    "FromFolder":"cgInTools.maya.execute",
+                    "FromFolder":"cgInTools.maya.mayaPort",
                     "ImportFile":"mayaPortEX",
                     "Function":"main()",
                     "Icon":""
@@ -47,14 +47,14 @@
             "DataMenuParamArray":[
                 {
                     "Label":"Geometry Reset",
-                    "FromFolder":"cgInTools.maya.execute",
+                    "FromFolder":"cgInTools.maya.freezeResetHisDel",
                     "ImportFile":"freezeResetHisDelEX",
                     "Function":"main()",
                     "Icon":""
                 },
                 {
                     "Label":"UnKnown Delete",
-                    "FromFolder":"cgInTools.maya.execute",
+                    "FromFolder":"cgInTools.maya.unknownDel",
                     "ImportFile":"unknownDelEX",
                     "Function":"main()",
                     "Icon":""
@@ -68,7 +68,7 @@
                 },
                 {
                     "Label":"Reset Material",
-                    "FromFolder":"cgInTools.maya.execute",
+                    "FromFolder":"cgInTools.maya.resetMaterial",
                     "ImportFile":"resetMaterialEX",
                     "Function":"main()",
                     "Icon":""
@@ -99,7 +99,7 @@
             "DataMenuParamArray":[
                 {
                     "Label":"Select Position Joint",
-                    "FromFolder":"cgInTools.maya.execute",
+                    "FromFolder":"cgInTools.maya.selectPosJoint",
                     "ImportFile":"selectPosJointEX",
                     "Function":"main()",
                     "Icon":""
@@ -166,22 +166,15 @@
             "DataMenuParamArray":[
                 {
                     "Label":"Auto Rename",
-                    "FromFolder":"cgInTools.maya.execute",
-                    "ImportFile":"autoRenameEX",
+                    "FromFolder":"cgInTools.maya.autoNodeRename",
+                    "ImportFile":"autoNodeRenameEX",
                     "Function":"main()",
                     "Icon":""
                 },
                 {
                     "Label":true,
-                    "FromFolder":"cgInTools.maya.option",
-                    "ImportFile":"autoRenameOP",
-                    "Function":"main()",
-                    "Icon":""
-                },
-                {
-                    "Label":"Ctrl Color Change",
-                    "FromFolder":"cgInTools.maya.manager",
-                    "ImportFile":"ctrlColorChangeMN",
+                    "FromFolder":"cgInTools.maya.autoNodeRename",
+                    "ImportFile":"autoNodeRenameOP",
                     "Function":"main()",
                     "Icon":""
                 }
@@ -218,14 +211,14 @@
             "DataMenuParamArray":[
                 {
                     "Label":"Corner Edge Select",
-                    "FromFolder":"cgInTools.maya.execute",
+                    "FromFolder":"cgInTools.maya.geometryCornerEdge",
                     "ImportFile":"geometryCornerEdgeEX",
                     "Function":"main()",
                     "Icon":"cornerEdge.png"
                 },
                 {
                     "Label":true,
-                    "FromFolder":"cgInTools.maya.option",
+                    "FromFolder":"cgInTools.maya.geometryCornerEdge",
                     "ImportFile":"geometryCornerEdgeOP",
                     "Function":"main()",
                     "Icon":""
@@ -242,8 +235,15 @@
             "Type":"multi",
             "DataMenuParamArray":[
                 {
+                    "Label":"Ctrl Color Change",
+                    "FromFolder":"cgInTools.maya.ctrlColorChange",
+                    "ImportFile":"ctrlColorChangeMN",
+                    "Function":"main()",
+                    "Icon":""
+                },
+                {
                     "Label":"Replace Curve",
-                    "FromFolder":"cgInTools.maya.execute",
+                    "FromFolder":"cgInTools.maya.replaceCurves",
                     "ImportFile":"replaceCurvesEX",
                     "Function":"main()",
                     "Icon":""
@@ -261,14 +261,14 @@
             "DataMenuParamArray":[
                 {
                     "Label":"Rename Skc Select Geo",
-                    "FromFolder":"cgInTools.maya.execute",
+                    "FromFolder":"cgInTools.maya.renameSkcInGeo",
                     "ImportFile":"renameSkcInGeoEX",
                     "Function":"main()",
                     "Icon":""
                 },
                 {
                     "Label":"Multi Copy Skin Weight",
-                    "FromFolder":"cgInTools.maya.execute",
+                    "FromFolder":"cgInTools.maya.multiCopySkinWeight",
                     "ImportFile":"multiCopySkinWeightEX",
                     "Function":"main()",
                     "Icon":""
@@ -282,7 +282,7 @@
                 },
                 {
                     "Label":"Remove From InfluenceUI",
-                    "FromFolder":"cgInTools.maya.execute",
+                    "FromFolder":"cgInTools.maya.infJntRemove",
                     "ImportFile":"infJntRemoveEX",
                     "Function":"main()",
                     "Icon":""
@@ -314,35 +314,35 @@
             "DataMenuParamArray":[
                 {
                     "Label":"Selections Query",
-                    "FromFolder":"cgInTools.maya.manager",
+                    "FromFolder":"cgInTools.maya.querySelections",
                     "ImportFile":"querySelectionsMN",
                     "Function":"main()",
                     "Icon":""
                 },
                 {
                     "Label":"NodeType Query",
-                    "FromFolder":"cgInTools.maya.manager",
+                    "FromFolder":"cgInTools.maya.queryNodeTypes",
                     "ImportFile":"queryNodeTypesMN",
                     "Function":"main()",
                     "Icon":""
                 },
                 {
                     "Label":"ShapeColor Query",
-                    "FromFolder":"cgInTools.maya.manager",
+                    "FromFolder":"cgInTools.maya.queryShapeColor",
                     "ImportFile":"queryShapeColorMN",
                     "Function":"main()",
                     "Icon":""
                 },
                 {
                     "Label":"KeyAttr Query",
-                    "FromFolder":"cgInTools.maya.manager",
+                    "FromFolder":"cgInTools.maya.queryKeyAttr",
                     "ImportFile":"queryKeyAttrMN",
                     "Function":"main()",
                     "Icon":""
                 },
                 {
                     "Label":"Matrix Query",
-                    "FromFolder":"cgInTools.maya.manager",
+                    "FromFolder":"cgInTools.maya.queryMatrix",
                     "ImportFile":"queryMatrixMN",
                     "Function":"main()",
                     "Icon":""
