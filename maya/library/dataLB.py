@@ -8,62 +8,6 @@ from ...library import baseLB as bLB
 cit.reloads([bLB])
 
 #Definition Data
-class DataMenuParam(bLB.DataOrigin):
-    def __init__(self,*dataTuple):
-        super(DataMenuParam,self).__init__(*dataTuple)
-        if (0 == len(dataTuple) or 
-            2 <= len(dataTuple)):
-            self._label_str=None
-            self._fromFolder_str=None
-            self._importFile_str=None
-            self._function_str=None
-            self._iconFileExt_str=None
-            self._dataChoice_strs=[
-                "Label",
-                "FromFolder",
-                "ImportFile",
-                "Function",
-                "Icon"
-            ]
-        elif 1 == len(dataTuple):
-            if isinstance(dataTuple[0],DataMenuParam):
-                self._label_str=dataTuple[0].getLabel()
-                self._fromFolder_str=dataTuple[0].getFromFolder()
-                self._importFile_str=dataTuple[0].getImportFile()
-                self._function_str=dataTuple[0].getFunction()
-                self._iconFileExt_str=dataTuple[0].getIcon()
-
-    #Setting Function
-    def setLabel(self,variable):
-        self._label_str=variable
-        return self._label_str
-    def getLabel(self):
-        return self._label_str
-    
-    def setFromFolder(self,variable):
-        self._fromFolder_str=variable
-        return self._fromFolder_str
-    def getFromFolder(self):
-        return self._fromFolder_str
-    
-    def setImportFile(self,variable):
-        self._importFile_str=variable
-        return self._importFile_str
-    def getImportFile(self):
-        return self._importFile_str
-    
-    def setFunction(self,variable):
-        self._function_str=variable
-        return self._function_str
-    def getFunction(self):
-        return self._function_str
-    
-    def setIcon(self,variable):
-        self._iconFileExt_str=variable
-        return self._iconFileExt_str
-    def getIcon(self):
-        return self._iconFileExt_str
-
 class DataAttribute(bLB.DataOrigin):
     def __init__(self,*dataTuple):
         super(DataAttribute,self).__init__(*dataTuple)
@@ -1366,63 +1310,7 @@ class DataFace(bLB.DataOrigin):
     def getID(self):
         return self._index_int
 
-#DefinitionArray Data
-class DataMenuParamArray(bLB.DataOrigin):
-    def __init__(self,*dataTuple):
-        super(DataMenuParamArray,self).__init__(*dataTuple)
-        if (0 == len(dataTuple) or 
-            2 <= len(dataTuple)):
-            self._menuName_str=None
-            self._menuType_str=None #"single" or "multi"
-            self._menu_DataMenuParams=[]
-            self._dataChoice_strs=[
-                "Name",
-                "Type",
-                "DataMenuParams"
-            ]
-        elif 1 == len(dataTuple):
-            if isinstance(dataTuple[0],DataMenuParamArray):
-                self._menuName_str=dataTuple[0].getName()
-                self._menuType_str=dataTuple[0].getType()
-                self._menu_DataMenuParams=dataTuple[0].getDataMenuParams()
-
-    def __len__(self):
-        return len(self._menu_DataMenuParams)
-
-    def __getitem__(self,index):
-        return self._menu_DataMenuParams[index]
-
-    def __setitem__(self,index,value):
-        self._menu_DataMenuParams[index]=value
-
-    def __delitem__(self,index):
-        del self._menu_DataMenuParams[index]
-
-    def __iter__(self):
-        return iter(self._menu_DataMenuParams)
-
-    #Setting Function
-    def setName(self,variable):
-        self._menuName_str=variable
-        return self._menuName_str
-    def getName(self):
-        return self._menuName_str
-    
-    def setType(self,variable):
-        self._menuType_str=variable
-        return self._menuType_str
-    def getType(self):
-        return self._menuType_str
-    
-    def setDataMenuParams(self,variable):
-        self._menu_DataMenuParams=variable
-        return self._menu_DataMenuParams
-    def addDataMenuParams(self,variable):
-        self._menu_DataMenuParams+=variable
-        return self._menu_DataMenuParams
-    def getDataMenuParams(self):
-        return self._menu_DataMenuParams
-    
+#DefinitionArray Data    
 class DataAttributeWeightArray(bLB.DataOrigin):
     def __init__(self,*dataTuple):
         super(DataAttributeWeightArray,self).__init__(*dataTuple)
@@ -1508,49 +1396,6 @@ class DataPointArray(bLB.DataOrigin):
         return self._point_DataPoints
 
 #Object Data
-class DataMenu(bLB.DataOrigin):
-    def __init__(self,*dataTuple):
-        super(DataMenu,self).__init__(*dataTuple)
-        if (0 == len(dataTuple) or 
-            2 <= len(dataTuple)):
-            self._menuName_str=None
-            self._menu_DataMenuParamArrays=[]
-            self._dataChoice_strs=[
-                "Name",
-                "DataMenuParamArrays"
-            ]
-        elif 1 == len(dataTuple):
-            if isinstance(dataTuple[0],DataMenu):
-                self._menuName_str=dataTuple[0].getName()
-                self._menu_DataMenuParamArrays=dataTuple[0].getDataMenuParamArrays()
-
-    #Setting Function
-    def setName(self,variable):
-        self._menuName_str=variable
-        return self._menuName_str
-    def getName(self):
-        return self._menuName_str
-    
-    def setDataMenuParamArrays(self,variables):
-        self._menu_DataMenuParamArrays=variables
-        return self._menu_DataMenuParamArrays
-    def addDataMenuParamArrays(self,variables):
-        self._menu_DataMenuParamArrays+=variables
-        return self._menu_DataMenuParamArrays
-    def getDataMenuParamArrays(self):
-        return self._menu_DataMenuParamArrays
-    
-    #Public Function
-    def readJson(self):
-        pass
-    def writeJson(self):
-        pass
-    
-    def readXML(self):
-        pass
-    def writeXML(self):
-        pass
-
 class DataNode(bLB.DataOrigin):
     def __init__(self,*dataTuple):
         super(DataNode,self).__init__(*dataTuple)

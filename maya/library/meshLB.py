@@ -3,7 +3,7 @@ import maya.cmds as cmds
 import maya.api.OpenMaya as om2
 
 import cgInTools as cit
-from . import appLB as aLB
+from . import openMayaLB as aLB
 from . import dataLB as dLB
 cit.reloads([aLB,dLB])
 class AppMeshPolygon(object):

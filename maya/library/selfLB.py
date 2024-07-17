@@ -2,37 +2,9 @@
 import cgInTools as cit
 from ...library import baseLB as bLB
 from . import dataLB as dLB
-from . import mayaMenuLB as mmLB
 from . import nodeLB as nLB
-from . import nameLB as naLB
 from . import projectLB as pjLB
-cit.reloads([bLB,dLB,mmLB,nLB,naLB,pjLB])
-
-class SelfMenu(bLB.SelfOrigin):
-    def __init__(self,selfObject=None):
-        super().__init__(selfObject)
-        if selfObject is None:
-            self._menu_DataMenu=None
-        elif isinstance(selfObject,SelfMenu):
-            self._menu_DataMenu=selfObject.getDataMenu()
-
-    #Setting Function
-    def setDataMenu(self,variable):
-        self._menu_DataMenu=variable
-        return self._menu_DataMenu
-    def getDataMenu(self):
-        return self._menu_DataMenu
-    
-    #Public Function
-    def create(self,dataMenu=None):
-        _menu_DataMenu=dataMenu or self._menu_DataMenu
-
-        menu_AppMenu=mmLB.AppMenu()
-        menu_AppMenu.setDataMenu(_menu_DataMenu)
-        menu_AppMenu.create()
-
-    def updata(self,dataMenu=None):
-        pass
+cit.reloads([bLB,dLB,nLB,pjLB])
 
 class SelfObjectArray(bLB.SelfOrigin):
     def __init__(self):

@@ -10,7 +10,7 @@ cit.reloads([sLB,jLB,xLB])
 
 class DataOrigin(ABC):
     def __init__(self,*dataTuple):
-        self.__setting_strs=self.__isSetGetFunction_query_strs()
+        self._setting_strs=self.__isSetGetFunction_query_strs()
         self._setting_dict=None
         from . import dataLB as dLB
         if (0 == len(dataTuple) or 
@@ -27,7 +27,7 @@ class DataOrigin(ABC):
         setting_strs=[
             m[0].replace("get","")
             for m in inspect.getmembers(self,predicate=inspect.ismethod)
-            if m[0].startswith("get") and m[0] is not "getSettingDict"
+            if m[0].startswith("get") and m[0] is not "getSettingDict" and m[0] is not "getOriginDataPath"
         ]
         return setting_strs
 
@@ -51,7 +51,7 @@ class DataOrigin(ABC):
     
     def writeDict(self):
         write_dict={}
-        for __setting_str in self.__setting_strs:
+        for __setting_str in self._setting_strs:
             setting_str=__setting_str[0].upper()+__setting_str[1:]
             variable=eval('self.get'+setting_str+'()')
             if type(variable) in (bool,int,float,str) or variable is None:

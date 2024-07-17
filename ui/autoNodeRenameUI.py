@@ -1,4 +1,5 @@
 # -*- coding: iso-8859-15 -*-
+
 try:
     from PySide2.QtCore import *
     from PySide2.QtWidgets import *
@@ -8,11 +9,11 @@ except ImportError:
     from PySide6.QtWidgets import *
     from PySide6.QtGui import *
 
-from ._reference import mainWindowUI as UI
+from . import baseUI as UI
 
-class AutoNodeRenameOPBase(UI.MainWindowBase):
+class AutoNodeRenameBase(UI.MainWindowBase):
     def __init__(self,*args,**kwargs):
-        super(AutoNodeRenameOPBase,self).__init__(*args, **kwargs)
+        super(AutoNodeRenameBase,self).__init__(*args, **kwargs)
         self.setObjectName("autoRename")
         self.setWindowTitle("autoRenameOption")
         self.buttonLeft_QPushButton.setText("run")
@@ -20,7 +21,10 @@ class AutoNodeRenameOPBase(UI.MainWindowBase):
         self.buttonRight_QPushButton.setText("close")
 
         main_QVBoxLayout=QVBoxLayout(self)
-        self.custom_QGridLayout.addLayout(main_QVBoxLayout,0,0)
+        
+        central_QWidget=QWidget()
+        central_QWidget.setLayout(main_QVBoxLayout)
+        self.custom_QScrollArea.setWidget(central_QWidget)
 
         modeSwitch_QHBoxLayout=QHBoxLayout(self)
         main_QVBoxLayout.addLayout(modeSwitch_QHBoxLayout)
@@ -83,5 +87,5 @@ class AutoNodeRenameOPBase(UI.MainWindowBase):
         self.side_QLineEdit=QLineEdit(self)
         customPlain_QFormLayout.addRow(side_QLabel,self.side_QLineEdit)
 
-#viewWindow=AutoRenameOPBase()
+#viewWindow=AutoNodeRenameBase()
 #viewWindow.show()

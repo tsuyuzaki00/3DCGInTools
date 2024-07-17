@@ -4,15 +4,11 @@ import maya.api.OpenMayaAnim as oma2
 import sys,math
 
 class AppOpenMayaBase():
-    def __init__(self):
-        pass
-    
-    #Single Function
     @staticmethod
     def node_query_MObject(node):
         if node == None:
             return None
-        elif not type(node) is str and not type(node) is unicode:
+        elif not type(node) is str:
             om2.MGlobal.displayError("TypeError: Please insert one string in value. This is a "+str(type(node))+" type")
             sys.exit()
         node_MSelectionList=om2.MGlobal.getSelectionListByName(node)
@@ -23,7 +19,7 @@ class AppOpenMayaBase():
     def convertMObject_query_MDagPath(node_MObject):
         node_MDagPath=om2.MDagPath().getAPathTo(node_MObject)
         return node_MDagPath
-    
+
     @staticmethod
     def nodeAttr_query_MPlug(node_MObject,attr_str):
         node_MFnDependencyNode=om2.MFnDependencyNode(node_MObject)
@@ -35,13 +31,13 @@ class AppOpenMayaBase():
         node_MFnDependencyNode=om2.MFnDependencyNode(node_MObject)
         attr_MObject=node_MFnDependencyNode.findAlias(attrName_str)
         return attr_MObject
-    
+
     @staticmethod
     def node_create_MObject(nodeType_str,nodeName_str):
         node_MFnDependencyNode=om2.MFnDependencyNode()
         node_MObject=node_MFnDependencyNode.create(nodeType_str,nodeName_str)
         return node_MObject
-    
+
     @staticmethod
     def parent_query_MObject(node_MDagPath):
         node_MFnDagNode=om2.MFnDagNode(node_MDagPath)

@@ -282,8 +282,8 @@
                 },
                 {
                     "Label":"Remove From InfluenceUI",
-                    "FromFolder":"cgInTools.maya.infJntRemove",
-                    "ImportFile":"infJntRemoveEX",
+                    "FromFolder":"cgInTools.maya.infJointRemove",
+                    "ImportFile":"infJointRemoveEX",
                     "Function":"main()",
                     "Icon":""
                 },

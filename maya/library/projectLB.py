@@ -16,7 +16,7 @@ cit.reloads([fLB,pLB,dLB,cLB])
 
 class AppProject(object):
     def __init__(self):
-        self._copyProject_dir=PROJECTFOLDER
+        #self._copyProject_dir=PROJECTFOLDER
         self._project_DataPath=None
         self._project_AppPath=pLB.AppPath()
     

@@ -59,19 +59,16 @@ class DataMenuParam(bLB.DataOrigin):
     #Public Function
     def readDict(self,setting_dict=None):
         _setting_dict=setting_dict or self._setting_dict
-
-        self.setLabel(_setting_dict.get("Label"))
-        self.setFromFolder(_setting_dict.get("FromFolder"))
-        self.setImportFile(_setting_dict.get("ImportFile"))
-        self.setFunction(_setting_dict.get("Function"))
-        self.setIcon(_setting_dict.get("Icon"))
+        
+        for __setting_str in self._setting_strs:
+            exec('self.set'+__setting_str+'(_setting_dict.get("'+__setting_str+'"))')
 
     def readXML(self,dataPath=None):
         _origin_DataPath=dataPath or self._origin_DataPath
     
 class DataMenuParamArray(bLB.DataOrigin):
     def __init__(self,*dataTuple):
-        super(DataMenuParamArray,self).__init__(*dataTuple)
+        super().__init__(*dataTuple)
         if (0 == len(dataTuple) or 
             2 <= len(dataTuple)):
             self._menuName_str=None
@@ -137,7 +134,7 @@ class DataMenuParamArray(bLB.DataOrigin):
 
 class DataMenu(bLB.DataOrigin):
     def __init__(self,*dataTuple):
-        super(DataMenu,self).__init__(*dataTuple)
+        super().__init__(*dataTuple)
         if (0 == len(dataTuple) or 
             2 <= len(dataTuple)):
             self._menuName_str=None

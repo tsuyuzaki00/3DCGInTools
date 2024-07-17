@@ -17,7 +17,7 @@ def checkScriptsData(folderName_str,setting_dir,cgInToolsData_dir):
     if not os.path.isdir(folder_dir):
         os.makedirs(folder_dir)
     
-    file_strs=[file_str for file_str in os.listdir(setting_dir) if "init" in file_str or "execute" in file_str]
+    file_strs=[file_str for file_str in os.listdir(setting_dir) if folderName_str+"OP" in file_str or folderName_str+"EX" in file_str]
     for file_str in file_strs:
         file_path=os.path.join(folder_dir,file_str)
         if not os.path.isfile(file_path):
