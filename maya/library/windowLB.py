@@ -18,7 +18,7 @@ def mayaMainWindow_query_QWidget():
     return mayaWindow_QWidget
 
 # fileMode 0=Export 1=Import
-def mayaPathDialog_query_dict(text,fileMode,extension="json",directory=None):
+def mayaPathDialog_query_dir_file(text,fileMode,extension="json",directory=None):
     default_dir=directory or cmds.workspace(q=True,rd=True)
     path_strs=cmds.fileDialog2(
         fileFilter=text+" ."+extension+"(*."+extension+")",
@@ -31,10 +31,10 @@ def mayaPathDialog_query_dict(text,fileMode,extension="json",directory=None):
         return None
     directory_dir=os.path.dirname(path_strs[0])
     file_str=os.path.splitext(os.path.basename(path_strs[0]))[0]
-    return {"directory":directory_dir,"file":file_str}
+    return directory_dir,file_str
 
 # fileMode 0=Export 1=Import
-def mayaDirDialog_query_dict(text,directory=None,upRoot=False):
+def mayaDirDialog_query_dir_file(text,directory=None,upRoot=False):
     if upRoot:
         wrkspace_dir=cmds.workspace(q=True,rd=True)
         root_dir=os.path.abspath(os.path.join(wrkspace_dir,os.pardir))
@@ -54,4 +54,4 @@ def mayaDirDialog_query_dict(text,directory=None,upRoot=False):
         return None
     directory_dir=os.path.dirname(path_strs[0])
     folder_str=os.path.splitext(os.path.basename(path_strs[0]))[0]
-    return {"directory":directory_dir,"folder":folder_str}
+    return directory_dir,folder_str

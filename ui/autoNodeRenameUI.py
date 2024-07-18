@@ -32,12 +32,12 @@ class AutoNodeRenameBase(UI.MainWindowBase):
         self.radioGrp_QButtonGroup=QButtonGroup()
 
         self.fullAuto_QRadioButton=QRadioButton("fullAuto",self)
-        self.fullAuto_QRadioButton.setChecked(True)
+        #self.fullAuto_QRadioButton.setChecked(True)
         self.radioGrp_QButtonGroup.addButton(self.fullAuto_QRadioButton,0)
         modeSwitch_QHBoxLayout.addWidget(self.fullAuto_QRadioButton)
 
         self.setAuto_QRadioButton=QRadioButton("setAuto",self)
-        #self.setAuto_QRadioButton.setChecked(True)
+        self.setAuto_QRadioButton.setChecked(True)
         self.radioGrp_QButtonGroup.addButton(self.setAuto_QRadioButton,1)
         modeSwitch_QHBoxLayout.addWidget(self.setAuto_QRadioButton)
 
@@ -49,23 +49,23 @@ class AutoNodeRenameBase(UI.MainWindowBase):
         main_QVBoxLayout.addLayout(nameOrder_QHBoxLayout)
 
         self.name01_QComboBox=QComboBox()
-        self.name01_QComboBox.addItems(["custom","title","node","side","titleHie","titleNum","nodeNum","sideNum","scene"])
+        self.name01_QComboBox.addItems(["Title","NodeType","Side","Custom_0","Title_Numbers_0","Title_Hierarchys_0","NodeType_Numbers_0","NodeType_Hierarchys_0","Side_Numbers_0","Side_Hierarchys_0"])
         nameOrder_QHBoxLayout.addWidget(self.name01_QComboBox)
 
         self.name02_QComboBox=QComboBox()
-        self.name02_QComboBox.addItems(["none","custom","title","node","side","number","titleHie","titleNum","nodeNum","sideNum","scene"])
+        self.name02_QComboBox.addItems(["None","Title","NodeType","Side","Numbers_0","Hierarchys_0","Custom_0","Title_Numbers_0","Title_Hierarchys_0","NodeType_Numbers_0","NodeType_Hierarchys_0","Side_Numbers_0","Side_Hierarchys_0"])
         nameOrder_QHBoxLayout.addWidget(self.name02_QComboBox)
 
         self.name03_QComboBox=QComboBox()
-        self.name03_QComboBox.addItems(["none","custom","title","node","side","number","titleHie","titleNum","nodeNum","sideNum","scene"])
+        self.name03_QComboBox.addItems(["None","Title","NodeType","Side","Numbers_0","Hierarchys_0","Custom_0","Title_Numbers_0","Title_Hierarchys_0","NodeType_Numbers_0","NodeType_Hierarchys_0","Side_Numbers_0","Side_Hierarchys_0"])
         nameOrder_QHBoxLayout.addWidget(self.name03_QComboBox)
 
         self.name04_QComboBox=QComboBox()
-        self.name04_QComboBox.addItems(["none","custom","title","node","side","number","titleHie","titleNum","nodeNum","sideNum","scene"])
+        self.name04_QComboBox.addItems(["None","Title","NodeType","Side","Numbers_0","Hierarchys_0","Custom_0","Title_Numbers_0","Title_Hierarchys_0","NodeType_Numbers_0","NodeType_Hierarchys_0","Side_Numbers_0","Side_Hierarchys_0"])
         nameOrder_QHBoxLayout.addWidget(self.name04_QComboBox)
 
         self.name05_QComboBox=QComboBox()
-        self.name05_QComboBox.addItems(["none","custom","title","node","side","number","titleHie","titleNum","nodeNum","sideNum","scene"])
+        self.name05_QComboBox.addItems(["None","Title","NodeType","Side","Numbers_0","Hierarchys_0","Custom_0","Title_Numbers_0","Title_Hierarchys_0","NodeType_Numbers_0","NodeType_Hierarchys_0","Side_Numbers_0","Side_Hierarchys_0"])
         nameOrder_QHBoxLayout.addWidget(self.name05_QComboBox)
 
         customPlain_QFormLayout=QFormLayout(self)

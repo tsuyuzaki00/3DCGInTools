@@ -1,20 +1,21 @@
 {
     "Customs": [
-        "test"
+        null
     ],
     "Hierarchys": [
         "A"
     ],
-    "Increase": "Hierarchys_0",
+    "Increase": null,
+    "NodeType": null,
     "Numbers": [
         0
     ],
     "Orders": [
         "Title",
-        "TagType",
+        "NodeType",
+        "Side",
         "Numbers_0"
     ],
     "Side": null,
-    "TagType": null,
     "Title": null
 }

@@ -10,7 +10,7 @@ cit.reloads([bLB,fLB,oLB])
 
 RULES_DICT=fLB.readJson(cit.maya_dir,"library","nameLB")
 
-class DataNodoName(bLB.DataOrigin):
+class DataNodeName(bLB.DataOrigin):
     def __init__(self,*dataTuple):
         super().__init__(*dataTuple)
         if (0 == len(dataTuple) or 
@@ -21,14 +21,14 @@ class DataNodoName(bLB.DataOrigin):
             self._numberName_ints=[0]
             self._hierarchyName_strs=["A"]
             self._customName_strs=[]
-            self._orderName_strs=["Title","TagType","Numbers_0"]
-            #["Title","TagType","Side","Numbers_0","Hierarchys_1","Customs_10","Title_Numbers_0","Title_Hierarchys_2","Side_Numbers_0","Side_Hierarchys_2"]
+            self._orderName_strs=["Title","NodeType","Numbers_0"]
+            #["Title","NodeType","Side","Numbers_0","Hierarchys_1","Customs_10","Title_Numbers_0","Title_Hierarchys_2","NodeType_Numbers_0","NodeType_Hierarchys_2","Side_Numbers_0","Side_Hierarchys_2"]
             self._increaseName_str=None
             #None,"Numbers_0","Hierarchys_10"
         elif 1 == len(dataTuple):
-            if isinstance(dataTuple[0],DataNodoName):
+            if isinstance(dataTuple[0],DataNodeName):
                 self._titleName_str=dataTuple[0].getTitle()
-                self._tagTypeName_str=dataTuple[0].getTagType()
+                self._tagTypeName_str=dataTuple[0].getNodeType()
                 self._sideName_str=dataTuple[0].getSide()
                 self._numberName_ints=dataTuple[0].getNumbers()
                 self._hierarchyName_strs=dataTuple[0].getHierarchys()
@@ -43,10 +43,10 @@ class DataNodoName(bLB.DataOrigin):
     def getTitle(self):
         return self._titleName_str
     
-    def setTagType(self,variable):
+    def setNodeType(self,variable):
         self._tagTypeName_str=variable
         return self._tagTypeName_str
-    def getTagType(self):
+    def getNodeType(self):
         return self._tagTypeName_str
     
     def setSide(self,variable):
@@ -110,26 +110,27 @@ class DataNodoName(bLB.DataOrigin):
 class AppNodeName(oLB.AppOpenMayaBase):
     def __init__(self):
         super().__init__()
-        self._name_DataNodoName=None
+        self._name_DataNodeName=None
         self._node_DataNode=None
         self._nodeNameRule_dict=RULES_DICT["nodeName_dict"]
 
     #Single Function
     @staticmethod
-    def orderNames_create_str(name_DataNodoName):
-        order_strs=name_DataNodoName.getOrders()
+    def orderNames_create_str(name_DataNodeName):
+        order_strs=name_DataNodeName.getOrders()
         partsName_strs=[]
         for order_str in order_strs:
+            print(order_str)
             if order_str is None:
                 continue
             orderSplit_strs=order_str.split("_")
             if len(orderSplit_strs) is 1:
-                partsName_value=eval('name_DataNodoName.get'+orderSplit_strs[0]+'()')
+                    partsName_value=eval('name_DataNodeName.get'+orderSplit_strs[0]+'()')
             elif len(orderSplit_strs) is 2:
-                partsName_value=eval('name_DataNodoName.get'+orderSplit_strs[0]+'()['+orderSplit_strs[-1]+']')
+                partsName_value=eval('name_DataNodeName.get'+orderSplit_strs[0]+'()['+orderSplit_strs[-1]+']')
             elif len(orderSplit_strs) is 3:
-                partsName_value=eval('name_DataNodoName.get'+orderSplit_strs[0]+'()')
-                sequence_value=eval('name_DataNodoName.get'+orderSplit_strs[1]+'()['+orderSplit_strs[-1]+']')
+                partsName_value=eval('name_DataNodeName.get'+orderSplit_strs[0]+'()')
+                sequence_value=eval('name_DataNodeName.get'+orderSplit_strs[1]+'()['+orderSplit_strs[-1]+']')
                 if partsName_value is None:
                     partsName_value=sequence_value
                 else:
@@ -167,11 +168,11 @@ class AppNodeName(oLB.AppOpenMayaBase):
     #Multi Function
     def _sameName_check_str(self,name_str):
         while cmds.objExists(name_str):
-            next_DataNodoName=self.nextIncrease()
-            if next_DataNodoName is None:
+            next_DataNodeName=self.nextIncrease()
+            if next_DataNodeName is None:
                 break
             else:
-                name_str=self.orderNames_create_str(next_DataNodoName)
+                name_str=self.orderNames_create_str(next_DataNodeName)
         return name_str
 
     #Inheritance Function
@@ -209,11 +210,11 @@ class AppNodeName(oLB.AppOpenMayaBase):
         return node_MFnDependencyNode.name()
 
     #Setting Function
-    def setDataNodoName(self,variable):
-        self._name_DataNodoName=variable
-        return self._name_DataNodoName
-    def getDataNodoName(self):
-        return self._name_DataNodoName
+    def setDataNodeName(self,variable):
+        self._name_DataNodeName=variable
+        return self._name_DataNodeName
+    def getDataNodeName(self):
+        return self._name_DataNodeName
 
     def setDataNode(self,variable):
         self._node_DataNode=variable
@@ -229,88 +230,88 @@ class AppNodeName(oLB.AppOpenMayaBase):
     
     #Public Function
     def create(self,dataName=None):
-        _name_DataNodoName=dataName or self._name_DataNodoName
+        _name_DataNodeName=dataName or self._name_DataNodeName
 
-        name_str=self.orderNames_create_str(_name_DataNodoName)
+        name_str=self.orderNames_create_str(_name_DataNodeName)
         checkName_str=self._sameName_check_str(name_str)
         return checkName_str
     
     def nextIncrease(self,dataName=None):
-        _name_DataNodoName=dataName or self._name_DataNodoName
+        _name_DataNodeName=dataName or self._name_DataNodeName
 
-        if _name_DataNodoName.getIncrease() is None:
-            _name_DataNodoName.addOrders(["Numbers_0"])
-            return _name_DataNodoName
-        increase_strs=_name_DataNodoName.getIncrease().split("_")
+        if _name_DataNodeName.getIncrease() is None:
+            _name_DataNodeName.addOrders(["Numbers_0"])
+            return _name_DataNodeName
+        increase_strs=_name_DataNodeName.getIncrease().split("_")
         if "Numbers" in increase_strs:
-            number_ints=_name_DataNodoName.getNumbers()
+            number_ints=_name_DataNodeName.getNumbers()
             number_int=number_ints[int(increase_strs[-1])]
             number_ints[int(increase_strs[-1])]=number_int+1
-            _name_DataNodoName.setNumbers(number_ints)
-            return _name_DataNodoName
+            _name_DataNodeName.setNumbers(number_ints)
+            return _name_DataNodeName
         elif "Hierarchys" in increase_strs:
-            increase_strs=_name_DataNodoName.getIncrease().split("_")
-            hierarchy_strs=_name_DataNodoName.getHierarchys()
+            increase_strs=_name_DataNodeName.getIncrease().split("_")
+            hierarchy_strs=_name_DataNodeName.getHierarchys()
             hierarchy_str=hierarchy_strs[int(increase_strs[-1])]
             hierarchy_strs[int(increase_strs[-1])]=self.nextAlphabet_edit_str(hierarchy_str)
-            _name_DataNodoName.setHierarchys(hierarchy_strs)
-            return _name_DataNodoName
+            _name_DataNodeName.setHierarchys(hierarchy_strs)
+            return _name_DataNodeName
         else:
-            _name_DataNodoName.addOrders(["Numbers_0"])
-            return _name_DataNodoName
+            _name_DataNodeName.addOrders(["Numbers_0"])
+            return _name_DataNodeName
         
     def rename(self,dataName=None,dataNode=None):
-        _name_DataNodoName=dataName or self._name_DataNodoName
+        _name_DataNodeName=dataName or self._name_DataNodeName
         _node_DataNode=dataNode or self._node_DataNode
 
-        name_str=self.orderNames_create_str(_name_DataNodoName)
+        name_str=self.orderNames_create_str(_name_DataNodeName)
         checkName_str=self._sameName_check_str(name_str)
         rename_str=self._nodeRename_edit_str(_node_DataNode.getName(),checkName_str)
         return rename_str
 
     def editRename(self,dataName=None,dataNode=None):
-        _name_DataNodoName=dataName or self._name_DataNodoName
+        _name_DataNodeName=dataName or self._name_DataNodeName
         _node_DataNode=dataNode or self._node_DataNode
 
-        if _name_DataNodoName.getTitle() is None:
+        if _name_DataNodeName.getTitle() is None:
             nameSplits=_node_DataNode.getName().split("_")
             smashNumber_str=self.smashNumber_edit_str(nameSplits[0])
             smashAlphabet_str=self.smashAlphabet_edit_str(smashNumber_str)
-            _name_DataNodoName.setTitle(smashAlphabet_str)
+            _name_DataNodeName.setTitle(smashAlphabet_str)
 
-        if _name_DataNodoName.getTagType() is None:
+        if _name_DataNodeName.getNodeType() is None:
             tagType_str=self._tagType_query_str(_node_DataNode.getName())
             typeName_str=self._nodeNameRule_dict.get(tagType_str)
-            _name_DataNodoName.setTagType(typeName_str)
+            _name_DataNodeName.setNodeType(typeName_str)
 
-        if _name_DataNodoName.getSide() is None:
+        if _name_DataNodeName.getSide() is None:
             side_str=self._sideName_query_str(_node_DataNode.getName())
-            _name_DataNodoName.setSide(side_str)
+            _name_DataNodeName.setSide(side_str)
 
-        name_str=self.orderNames_create_str(_name_DataNodoName)
+        name_str=self.orderNames_create_str(_name_DataNodeName)
         checkName_str=self._sameName_check_str(name_str)
         rename_str=self._nodeRename_edit_str(_node_DataNode.getName(),checkName_str)
         return rename_str
 
-    def autoRename(self,dataNode=None,order_strs=["Title","TagType"]):
+    def autoRename(self,dataNode=None,order_strs=["Title","NodeType"]):
         _node_DataNode=dataNode or self._node_DataNode
 
-        _name_DataNodoName=DataNodoName()
-        _name_DataNodoName.setOrders(order_strs)
+        _name_DataNodeName=DataNodeName()
+        _name_DataNodeName.setOrders(order_strs)
 
         nameSplits=_node_DataNode.getName().split("_")
         smashNumber_str=self.smashNumber_edit_str(nameSplits[0])
         smashAlphabet_str=self.smashAlphabet_edit_str(smashNumber_str)
-        _name_DataNodoName.setTitle(smashAlphabet_str)
+        _name_DataNodeName.setTitle(smashAlphabet_str)
         
         tagType_str=self._tagType_query_str(_node_DataNode.getName())
         typeName_str=self._nodeNameRule_dict.get(tagType_str)
-        _name_DataNodoName.setTagType(typeName_str)
+        _name_DataNodeName.setNodeType(typeName_str)
         
         side_str=self._sideName_query_str(_node_DataNode.getName())
-        _name_DataNodoName.setSide(side_str)
+        _name_DataNodeName.setSide(side_str)
 
-        name_str=self.orderNames_create_str(_name_DataNodoName)
+        name_str=self.orderNames_create_str(_name_DataNodeName)
         checkName_str=self._sameName_check_str(name_str)
         rename_str=self._nodeRename_edit_str(_node_DataNode.getName(),checkName_str)
         return rename_str

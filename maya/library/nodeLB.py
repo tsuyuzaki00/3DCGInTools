@@ -200,7 +200,7 @@ class SelfDGNode(bLB.SelfOrigin):
         super(SelfDGNode,self).__init__(selfObject)
         if selfObject is None:
             self._node_DataNode=None
-            self._name_DataNodoName=None
+            self._name_DataNodeName=None
             self._create_DataNode=None
             self._create_DataPlugs=None
             self._edit_DataPlugs=None
@@ -209,7 +209,7 @@ class SelfDGNode(bLB.SelfOrigin):
             self._driven_DataKeyable=None
         elif isinstance(selfObject,SelfDGNode):
             self._node_DataNode=selfObject.getDataNode()
-            self._name_DataNodoName=selfObject.getDataNodoName()
+            self._name_DataNodeName=selfObject.getDataNodeName()
             self._create_DataNode=selfObject.getCreateDataNode()
             self._create_DataPlugs=selfObject.getCreateDataPlugs()
             self._edit_DataPlugs=selfObject.getEditDataPlugs()
@@ -224,11 +224,11 @@ class SelfDGNode(bLB.SelfOrigin):
     def getDataNode(self):
         return self._node_DataNode
 
-    def setDataNodoName(self,variable):
-        self._name_DataNodoName=variable
-        return self._name_DataNodoName
-    def getDataNodoName(self):
-        return self._name_DataNodoName
+    def setDataNodeName(self,variable):
+        self._name_DataNodeName=variable
+        return self._name_DataNodeName
+    def getDataNodeName(self):
+        return self._name_DataNodeName
 
     def setCreateDataNode(self,variable):
         self._create_DataNode=variable
@@ -269,10 +269,10 @@ class SelfDGNode(bLB.SelfOrigin):
     #Public Function
     def createNode(self,dataNode=None,dataName=None):
         _create_DataNode=dataNode or self._create_DataNode
-        _name_DataNodoName=dataName or self._name_DataNodoName
+        _name_DataNodeName=dataName or self._name_DataNodeName
 
         name_AppName=nnLB.AppNodeName()
-        name_AppName.setDataNodoName(_name_DataNodoName)
+        name_AppName.setDataNodeName(_name_DataNodeName)
         name_str=name_AppName.create()
         _create_DataNode.setName(name_str)
 
@@ -294,21 +294,21 @@ class SelfDGNode(bLB.SelfOrigin):
 
     def rename(self,dataNode=None,dataName=None):
         _node_DataNode=dataNode or self._node_DataNode
-        _name_DataNodoName=dataName or self._name_DataNodoName
+        _name_DataNodeName=dataName or self._name_DataNodeName
 
         rename_AppNodeName=nnLB.AppNodeName()
         rename_AppNodeName.setDataNode(_node_DataNode)
-        rename_AppNodeName.setDataNodoName(_name_DataNodoName)
+        rename_AppNodeName.setDataNodeName(_name_DataNodeName)
         rename_str=rename_AppNodeName.rename()
         return rename_str
     
     def editRename(self,dataNode=None,dataName=None):
         _node_DataNode=dataNode or self._node_DataNode
-        _name_DataNodoName=dataName or self._name_DataNodoName
+        _name_DataNodeName=dataName or self._name_DataNodeName
 
         rename_AppNodeName=nnLB.AppNodeName()
         rename_AppNodeName.setDataNode(_node_DataNode)
-        rename_AppNodeName.setDataNodoName(_name_DataNodoName)
+        rename_AppNodeName.setDataNodeName(_name_DataNodeName)
         rename_str=rename_AppNodeName.editRename()
         return rename_str
 

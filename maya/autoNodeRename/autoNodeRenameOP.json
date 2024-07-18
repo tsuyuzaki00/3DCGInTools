@@ -1,20 +1,14 @@
 {
-    "Customs": [
-        "test"
-    ],
-    "Hierarchys": [
-        "A"
-    ],
-    "Increase": "Hierarchys_0",
-    "Numbers": [
-        0
-    ],
-    "Orders": [
+    "ModeSwitch": 1,
+    "CustomText": null,
+    "TitleText": null,
+    "NodeText": null,
+    "SideText": null,
+    "ComboBoxOrders": [
         "Title",
-        "TagType",
-        "Numbers_0"
-    ],
-    "Side": null,
-    "TagType": null,
-    "Title": null
+        "NodeType",
+        "Side",
+        "Numbers_0",
+        "None"
+    ]
 }
