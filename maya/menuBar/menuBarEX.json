@@ -13,14 +13,14 @@
             "DataMenuParamArray":[
                 {
                     "Label":"Create Project",
-                    "FromFolder":"cgInTools.maya.manager",
+                    "FromFolder":"cgInTools.maya.setProject",
                     "ImportFile":"createProjectMN",
                     "Function":"main()",
                     "Icon":""
                 },
                 {
                     "Label":"Edit Project",
-                    "FromFolder":"cgInTools.maya.manager",
+                    "FromFolder":"cgInTools.maya.setProject",
                     "ImportFile":"editProjectMN",
                     "Function":"main()",
                     "Icon":""

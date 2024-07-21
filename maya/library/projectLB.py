@@ -2,21 +2,17 @@
 import os
 import shutil
 import maya.cmds as cmds
-import maya.api.OpenMaya as om2
 
 import cgInTools as cit
+from ...library import baseLB as bLB
 from ...library import dataLB as dLB
-from ...library import functionLB as fLB
 from ...library import pathLB as pLB
 from . import cleanLB as cLB
-cit.reloads([fLB,pLB,dLB,cLB])
+cit.reloads([bLB,dLB,pLB,cLB])
 
-#RULE_DICT=fLB.readJson(cit.mayaSettings_dir,"rules","library")
-#PROJECTFOLDER=cit.mayaDefSetProject_dir
-
-class AppProject(object):
+class AppProject():
     def __init__(self):
-        #self._copyProject_dir=PROJECTFOLDER
+        self._copyProject_dir=cit.mayaDefSetProject_dir
         self._project_DataPath=None
         self._project_AppPath=pLB.AppPath()
     
@@ -92,7 +88,7 @@ class AppFile(object):
         self._file_DataPath=None
         self._file_SelfPath=None
 
-        self._fileType_dict=RULE_DICT["fileType_dict"]
+        #self._fileType_dict=#RULE_DICT["fileType_dict"]
         self._exType=None
 
     #Single Function
@@ -208,3 +204,46 @@ class AppFile(object):
         cLB.defaultMaterial_edit_func(uncleanObjs)
         self._judgeFileType_create_func(self._objs,self._path,self._file,self._extension,self._fileType_dict)
         self.undoDuplicate_edit_func(self._objs,dupGrps)
+
+
+class SelfProject(bLB.SelfOrigin):
+    def __init__(self,selfObject=None):
+        super(SelfProject,self).__init__(selfObject)
+        if selfObject is None:
+            self._project_DataPath=None
+        elif isinstance(selfObject,SelfProject):
+            self._project_DataPath=selfObject.getProjectDataPath()
+
+    #Setting Function
+    def setProjectDataPath(self,variable):
+        self._project_DataPath=variable
+        return self._project_DataPath
+    def currentProjectDataPath(self):
+        current_AppProject=AppProject()
+        self._project_DataPath=current_AppProject.currentDataPath()
+        return self._project_DataPath
+    def getProjectDataPath(self):
+        return self._project_DataPath
+
+    #Public Function
+    def createProject(self,dataPath=None):
+        _project_DataPath=dataPath or self._project_DataPath
+        
+        project_AppProject=AppProject()
+        project_AppProject.setDataPath(_project_DataPath)
+        workSpace_dir=project_AppProject.createProject()
+        return workSpace_dir
+
+    def editProject(self,dataPath=None):
+        _project_DataPath=dataPath or self._project_DataPath
+
+        project_AppProject=AppProject()
+        project_AppProject.setDataPath(_project_DataPath)
+        workSpace_dir=project_AppProject.editProject()
+        return workSpace_dir
+
+    def queryProject(self):
+        project_AppProject=AppProject()
+        project_AppProject.setDataPath(self._project_DataPath)
+        workSpace_dir=project_AppProject.queryProject()
+        return workSpace_dir

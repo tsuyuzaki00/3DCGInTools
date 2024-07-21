@@ -34,7 +34,7 @@ def mayaPathDialog_query_dir_file(text,fileMode,extension="json",directory=None)
     return directory_dir,file_str
 
 # fileMode 0=Export 1=Import
-def mayaDirDialog_query_dir_file(text,directory=None,upRoot=False):
+def mayaDirDialog_query_dir_folder(text,directory=None,upRoot=False):
     if upRoot:
         wrkspace_dir=cmds.workspace(q=True,rd=True)
         root_dir=os.path.abspath(os.path.join(wrkspace_dir,os.pardir))
