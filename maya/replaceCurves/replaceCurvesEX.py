@@ -9,8 +9,8 @@ def main():
     sourceNode=cmds.ls(sl=True)[0]
     targetNodes=cmds.ls(sl=True)[1:]
 
-    replace=cLB.EditCurve()
-    replace.setSourceNodeName(sourceNode)
+    replace=cLB.AppCurve()
+    replace.setSourceCurve(sourceNode)
     for targetNode in targetNodes:
-        replace.setTargetNode(targetNode)
+        replace.setTargetCurve(targetNode)
         replace.replaceShape()

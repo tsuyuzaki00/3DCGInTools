@@ -27,8 +27,8 @@
                 },
                 {
                     "Label":"Loaded 3DCONNEXION",
-                    "FromFolder":"cgInTools.maya.threeDconnexionLoad",
-                    "ImportFile":"threeDconnexionLoadEX",
+                    "FromFolder":"cgInTools.maya.threeDConnexionLoad",
+                    "ImportFile":"threeDConnexionLoadEX",
                     "Function":"main()",
                     "Icon":""
                 },

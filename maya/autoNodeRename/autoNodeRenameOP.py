@@ -6,12 +6,12 @@ import maya.cmds as cmds
 
 import cgInTools as cit
 from ...ui import autoNodeRenameUI as UI
+from ...library import dataLB as dLB
 from ...library import jsonLB as jLB
 from ..library import windowLB as wLB
-from ...library import dataLB as dLB
 from ..library import nameLB as nnLB
 from ..library import nodeLB as nLB
-cit.reloads([UI,jLB,wLB])
+cit.reloads([UI,dLB,jLB,wLB,nnLB,nLB])
 
 DATAFOLDER_STR="autoNodeRename"
 RESET_DIR,DATA_DIR=cit.checkScriptsData(DATAFOLDER_STR,cit.maya_dir,cit.mayaData_dir)
