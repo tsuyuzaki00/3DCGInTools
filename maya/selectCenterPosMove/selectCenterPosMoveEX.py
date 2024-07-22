@@ -2,7 +2,7 @@
 import maya.cmds as cmds
 
 import cgInTools as cit
-from ..library import sourceToTargetLB as sttLB
+from ..targetPosition import targetPositionLB as sttLB
 cit.reloads([sttLB])
 
 def main():

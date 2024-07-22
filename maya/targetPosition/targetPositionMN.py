@@ -7,7 +7,7 @@ import maya.cmds as cmds
 
 import cgInTools as cit
 from ...ui import targetPositionUI as UI
-from ..library import sourceToTargetLB as sttLB
+from . import targetPositionLB as sttLB
 from ..library import windowLB as wLB
 cit.reloads([UI,wLB,sttLB])
 
@@ -30,7 +30,7 @@ class TargetPosWindow(UI.TargetPosWindowBase):
         self.buttonCenter_QPushButton.setText("Reverse")
         self.buttonRight_QPushButton.setText("Clear")
         
-    def buttonLeftOnClicked(self):
+    def buttonLeftClicked(self):
         source_str=self.source_QLineEdit.text()
         target_str=self.target_QLineEdit.text()
         position_id=self.position_QButtonGroup.checkedId()
@@ -44,21 +44,21 @@ class TargetPosWindow(UI.TargetPosWindowBase):
             targetSet.setSourceNode(source)
             targetSet.moveToTarget()
 
-    def buttonCenterOnClicked(self):
+    def buttonCenterClicked(self):
         source_str=self.source_QLineEdit.text()
         target_str=self.target_QLineEdit.text()
         self.source_QLineEdit.setText(str(target_str))
         self.target_QLineEdit.setText(str(source_str))
 
-    def buttonRightOnClicked(self):
+    def buttonRightClicked(self):
         self.source_QLineEdit.clear()
         self.target_QLineEdit.clear()
 
-    def buttonSourceOnClicked(self):
+    def buttonSourceClicked(self):
         objs=cmds.ls(sl=True)
         self.source_QLineEdit.setText(str(objs))
 
-    def buttonTargetOnClicked(self):
+    def buttonTargetClicked(self):
         objs=cmds.ls(sl=True)
         self.target_QLineEdit.setText(str(objs))
 

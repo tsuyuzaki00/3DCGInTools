@@ -186,14 +186,14 @@
             "DataMenuParamArray":[
                 {
                     "Label":"Center Target Pos",
-                    "FromFolder":"cgInTools.maya.execute",
-                    "ImportFile":"autoRenameEX",
+                    "FromFolder":"cgInTools.maya.targetPosition",
+                    "ImportFile":"targetPositionEX",
                     "Function":"main()",
                     "Icon":""
                 },
                 {
                     "Label":"Window Target Pos",
-                    "FromFolder":"cgInTools.maya.manager",
+                    "FromFolder":"cgInTools.maya.targetPosition",
                     "ImportFile":"targetPositionMN",
                     "Function":"main()",
                     "Icon":""

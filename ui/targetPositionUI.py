@@ -8,18 +8,19 @@ except ImportError:
     from PySide6.QtWidgets import *
     from PySide6.QtGui import *
 
-from ui._reference import mainWindowUI as UI
+from . import baseUI as UI
 
 class TargetPosWindowBase(UI.MainWindowBase):
     def __init__(self,*args,**kwargs):
         super(TargetPosWindowBase,self).__init__(*args, **kwargs)
         self.setWindowFlags(Qt.Window)
-
-        self.setObjectName("object_name")
-        self.setWindowTitle("window_title")
+        self.setWindowTitle("targetPosition")
 
         main_QFormLayout=QFormLayout(self)
-        self.custom_QGridLayout.addLayout(main_QFormLayout,0,0)
+
+        central_QWidget=QWidget()
+        central_QWidget.setLayout(main_QFormLayout)
+        self.custom_QScrollArea.setWidget(central_QWidget)
 
         position_QGridLayout=QGridLayout(self)
         main_QFormLayout.addRow(position_QGridLayout)
@@ -69,7 +70,7 @@ class TargetPosWindowBase(UI.MainWindowBase):
         
         self.source_QPushButton=QPushButton("<<",self)
         self.objectText_QGridLayout.addWidget(self.source_QPushButton,0,2)
-        self.source_QPushButton.clicked.connect(self.buttonSourceOnClicked)
+        self.source_QPushButton.clicked.connect(self.buttonSourceClicked)
         
         self.target_QLabel=QLabel(">Pos Target:",self)
         self.objectText_QGridLayout.addWidget(self.target_QLabel,0,3)
@@ -79,12 +80,12 @@ class TargetPosWindowBase(UI.MainWindowBase):
         
         self.target_QPushButton=QPushButton("<<",self)
         self.objectText_QGridLayout.addWidget(self.target_QPushButton,0,5)
-        self.target_QPushButton.clicked.connect(self.buttonTargetOnClicked)
+        self.target_QPushButton.clicked.connect(self.buttonTargetClicked)
 
-    def buttonSourceOnClicked(self):
-        print("base")
-    def buttonTargetOnClicked(self):
-        print("base")
+    def buttonSourceClicked(self):
+        print("source")
+    def buttonTargetClicked(self):
+        print("target")
 
 #viewWindow=TargetPosWindowBase()
 #viewWindow.show()
