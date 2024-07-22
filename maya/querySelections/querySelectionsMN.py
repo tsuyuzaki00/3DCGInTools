@@ -1,26 +1,35 @@
 # -*- coding: iso-8859-15 -*-
-from PySide2.QtCore import *
-from PySide2.QtWidgets import *
-from PySide2.QtGui import *
+try:
+    from PySide2.QtCore import *
+    from PySide2.QtWidgets import *
+    from PySide2.QtGui import *
+except ImportError:
+    from PySide6.QtCore import *
+    from PySide6.QtWidgets import *
+    from PySide6.QtGui import *
+    
 import maya.cmds as cmds
 import random
 from maya.app.general.mayaMixin import MayaQWidgetDockableMixin
 
 import cgInTools as cit
 from ...ui import plainTextUI as UI
+from ...library import dataLB as dLB
 from ..library import windowLB as wLB
-from ...library import functionLB as fLB
-cit.reloads([UI,wLB,fLB])
+cit.reloads([UI,dLB,wLB])
 
-DATAFOLDER="querySelections"
-RESETDIR,DATADIR=cit.checkScriptsData(DATAFOLDER,cit.mayaSettings_dir,cit.mayaData_dir)
+DATAFOLDER_STR="querySelections"
+RESET_DIR,DATA_DIR=cit.checkScriptsData(DATAFOLDER_STR,cit.maya_dir,cit.mayaData_dir)
 
 class QuerySelectionsWindow(MayaQWidgetDockableMixin,UI.PlainTextWindowBase):
     def __init__(self,parent):
+        self._setting_strs=[
+            "SelectionText"
+        ]
         super(QuerySelectionsWindow, self).__init__(parent)
-        self._dataFolder_str=DATAFOLDER
-        self._reset_dir=RESETDIR
-        self._data_dir=DATADIR
+        self._dataFolder_str=DATAFOLDER_STR
+        self._reset_dir=RESET_DIR
+        self._data_dir=DATA_DIR
 
         windowTitle_str="querySelections"
         random_int=random.randint(0,9999)
@@ -33,7 +42,7 @@ class QuerySelectionsWindow(MayaQWidgetDockableMixin,UI.PlainTextWindowBase):
 
     #Single Function
     @staticmethod
-    def convertListToString_edit_str(text_strs=[]):
+    def convertListToString_edit_str(text_strs):
         text_str=""
         if not text_strs is []:
             for num,text in enumerate(text_strs):
@@ -46,85 +55,121 @@ class QuerySelectionsWindow(MayaQWidgetDockableMixin,UI.PlainTextWindowBase):
         return text_str
 
     @staticmethod
-    def convertStringToList_edit_list(listText_str=""):
-        text_list=[]
+    def convertStringToList_edit_strs(listText_str):
+        text_strs=[]
         if not listText_str is "":
-            text_list=eval(listText_str)
-        return text_list
+            text_strs=eval(listText_str)
+        return text_strs
     
     @staticmethod
-    def organizeList_edit_list(text_list2s=[[],[]]):
-        texts=[]
+    def organizeList_edit_strs(text_list2s=[[],[]]):
+        text_strs=[]
         for text_list2 in text_list2s:
-            texts.extend(text_list2)
-            texts=list(set(texts))
-        return texts
+            text_strs.extend(text_list2)
+            text_strs=list(set(text_strs))
+        return text_strs
 
-    #Private Function
-    def __setPlainText_create_func(self,objs,add=False):
-        organizeTexts=objs
-        if add:
-            getText_str=self.textPlain_QPlainTextEdit.toPlainText()
-            addTexts=self.convertStringToList_edit_list(getText_str)
-            organizeTexts=self.organizeList_edit_list([addTexts,objs])
-        organizeTexts.sort()
-        text_str=self.convertListToString_edit_str(organizeTexts)
+    #Setting Function
+    def setSelectionText(self,variables):
+        variables.sort()
+        text_str=self.convertListToString_edit_str(variables)
         self.textPlain_QPlainTextEdit.setPlainText(text_str)
-
-    def __getPlainText_query_dict(self):
+    def addSelectionText(self,variables):
+        organizeText_strs=variables
         getText_str=self.textPlain_QPlainTextEdit.toPlainText()
-        text_strs=self.convertStringToList_edit_list(getText_str)
-        write_dict={"selections":text_strs}
-        return write_dict
-
+        addText_strs=self.convertStringToList_edit_strs(getText_str)
+        organizeText_strs=self.organizeList_edit_strs([addText_strs,variables])
+        organizeText_strs.sort()
+        text_str=self.convertListToString_edit_str(organizeText_strs)
+        self.textPlain_QPlainTextEdit.setPlainText(text_str)
+    def getSelectionText(self):
+        getText_str=self.textPlain_QPlainTextEdit.toPlainText()
+        text_strs=self.convertStringToList_edit_strs(getText_str)
+        return text_strs
+    
     #Public Function
     def refreshClicked(self):
-        settings_dict=fLB.readJson(cit.mayaSettings_dir,self._dataFolder_str)
-        self.__setPlainText_create_func(settings_dict.get("selections"))
+        refresh_DataPath=dLB.DataPath()
+        refresh_DataPath.setAbsoluteDirectory(self._reset_dir)
+        refresh_DataPath.setFile("querySelectionsMN")
+        refresh_DataPath.setExtension("json")
+
+        settings_dict=self.importJson_query_dict(refresh_DataPath)
+        for _setting_str in self._setting_strs:
+            exec('self.set'+_setting_str+'(settings_dict.get("'+_setting_str+'"))')
 
     def restoreClicked(self):
-        data_dict=fLB.readJson(cit.mayaData_dir,self._dataFolder_str)
-        self.__setPlainText_create_func(data_dict.get("selections"))
+        restore_DataPath=dLB.DataPath()
+        restore_DataPath.setAbsoluteDirectory(self._data_dir)
+        restore_DataPath.setFile("querySelectionsMN")
+        restore_DataPath.setExtension("json")
+
+        settings_dict=self.importJson_query_dict(restore_DataPath)
+        for _setting_str in self._setting_strs:
+            exec('self.set'+_setting_str+'(settings_dict.get("'+_setting_str+'"))')
 
     def saveClicked(self):
-        write_dict=self.__getPlainText_query_dict()
-        fLB.writeJson(absolute=cit.mayaData_dir,relative=self._dataFolder_str,write=write_dict)
+        save_DataPath=dLB.DataPath()
+        save_DataPath.setAbsoluteDirectory(self._data_dir)
+        save_DataPath.setFile("querySelectionsMN")
+        save_DataPath.setExtension("json")
+
+        getValue_dict={}
+        for _setting_str in self._setting_strs:
+            getValue_value=eval('self.get'+_setting_str+'()')
+            getValue_dict[_setting_str]=getValue_value
+            
+        self.exportJson_create_func(save_DataPath,getValue_dict)
 
     def importClicked(self):
-        import_dict=wLB.mayaPathDialog_query_dict(text="import setting",fileMode=1,directory=self._data_dir)
-        if import_dict is None:
+        import_dir,import_file=wLB.mayaPathDialog_query_dir_file(text="import setting",fileMode=1,directory=self._data_dir)
+        if import_dir is None or import_file is None:
             return
-        data_dict=fLB.readJson(absolute=import_dict["directory"],file=import_dict["file"])
-        self.__setPlainText_create_func(data_dict.get("selections"))
+        import_DataPath=dLB.DataPath()
+        import_DataPath.setAbsoluteDirectory(import_dir)
+        import_DataPath.setFile(import_file)
+        import_DataPath.setExtension("json")
+
+        settings_dict=self.importJson_query_dict(import_DataPath)
+        for _setting_str in self._setting_strs:
+            exec('self.set'+_setting_str+'(settings_dict.get("'+_setting_str+'"))')
 
     def exportClicked(self):
-        export_dict=wLB.mayaPathDialog_query_dict(text="export setting",fileMode=0,directory=self._data_dir)
-        if export_dict is None:
+        export_dir,export_file=wLB.mayaPathDialog_query_dir_file(text="export setting",fileMode=0,directory=self._data_dir)
+        if export_dir is None or export_file is None:
             return
-        write_dict=self.__getPlainText_query_dict()
-        fLB.writeJson(absolute=export_dict["directory"],file=export_dict["file"],write=write_dict)
+        export_DataPath=dLB.DataPath()
+        export_DataPath.setAbsoluteDirectory(export_dir)
+        export_DataPath.setFile(export_file)
+        export_DataPath.setExtension("json")
+        
+        getValue_dict={}
+        for _setting_str in self._setting_strs:
+            getValue_value=eval('self.get'+_setting_str+'()')
+            getValue_dict[_setting_str]=getValue_value
+
+        self.exportJson_create_func(export_DataPath,getValue_dict)
 
     def buttonLeftClicked(self):
-        getText_str=self.textPlain_QPlainTextEdit.toPlainText()
-        if not getText_str == "":
-            text_strs=eval(getText_str)
+        text_strs=self.getSelectionText()
+        if not text_strs==[]:
             for text_str in text_strs:
                 if cmds.objExists(text_str):
                     cmds.select(text_str,add=True)
 
     def buttonCenterClicked(self):
-        objs=cmds.ls(sl=True)
-        if not objs == []:
-            self.__setPlainText_create_func(objs)
+        node_strs=cmds.ls(sl=True)
+        if not node_strs==[]:
+            self.setSelectionText(node_strs)
 
     def buttonRightClicked(self):
-        objs=cmds.ls(sl=True)
-        if not objs == []:
-            self.__setPlainText_create_func(objs,add=True)
+        node_strs=cmds.ls(sl=True)
+        if not node_strs==[]:
+            self.addSelectionText(node_strs)
 
 def main():
     viewWindow=QuerySelectionsWindow(parent=wLB.mayaMainWindow_query_QWidget())
-    objs=cmds.ls(sl=True)
-    if not objs == []:
-        viewWindow.__setPlainText_create_func(objs)
+    node_strs=cmds.ls(sl=True)
+    if not node_strs==[]:
+        viewWindow.setSelectionText(node_strs)
     viewWindow.show(dockable=True,floating=True)

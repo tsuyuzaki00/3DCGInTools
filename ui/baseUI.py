@@ -8,6 +8,10 @@ except ImportError:
     from PySide6.QtWidgets import *
     from PySide6.QtGui import *
 
+import cgInTools as cit
+from ..library import jsonLB as jLB
+cit.reloads([jLB])
+
 class MainWindowBase(QMainWindow):
     def __init__(self,*args,**kwargs):
         super(MainWindowBase,self).__init__(*args,**kwargs)
@@ -22,8 +26,22 @@ class MainWindowBase(QMainWindow):
         if not dictText_str is "" and not dictText_str is None:
             text_dict=eval(dictText_str)
         return text_dict
+    
+    @staticmethod
+    def importJson_query_dict(dataPath):
+        setting=jLB.AppJson()
+        setting.setDataPath(dataPath)
+        settings_dict=setting.read()
+        return settings_dict
+    
+    @staticmethod
+    def exportJson_create_func(dataPath,write_dict):
+        setting=jLB.AppJson()
+        setting.setDataPath(dataPath)
+        setting.setJsonDict(write_dict)
+        setting.write()
 
-    #Multi Function
+    #Inheritance Function
     def _menuUI_create_func(self):
         mainWindow_QMenuBar=self.menuBar()
         fileMenu_QAction=mainWindow_QMenuBar.addMenu("File")

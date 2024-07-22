@@ -1,10 +1,14 @@
 # -*- coding: iso-8859-15 -*-
-from PySide2.QtCore import *
-from PySide2.QtWidgets import *
-from PySide2.QtGui import *
+try:
+    from PySide2.QtCore import *
+    from PySide2.QtWidgets import *
+    from PySide2.QtGui import *
+except ImportError:
+    from PySide6.QtCore import *
+    from PySide6.QtWidgets import *
+    from PySide6.QtGui import *
 
-import os
-from maya import cmds
+import maya.cmds as cmds
 
 import cgInTools as cit
 from ...ui import tableUI as UI
@@ -21,46 +25,54 @@ class LookKeyWindow(UI.TableWindowBase):
         self.buttonCenter_QPushButton.setText("Select Replace")
         self.buttonRight_QPushButton.setText("Select Add")
 
-        self.queryKeyAttr_CTableWidget=UI.CTableWidget()
-        self.custom_QGridLayout.addWidget(self.queryKeyAttr_CTableWidget)
-        self.queryKeyAttr_CTableWidget.setHeaderAsixStr("Vertical")# Horizontal or Vertical
+        self.table_SelfTableWidget.setHeaderReverseBool(True)
+        geometry=self.table_SelfTableWidget.geometry()
+        self.setGeometry(geometry)
 
     #Single Function
-    def getKeyAttrs_query_list_list(self,obj):
-        attrValue_list=[]
-        attrValue_list.append(obj)
-        keyAttrs=cmds.listAttr(obj,k=True)
-        headerLabel_list=["ObjectName"]
-        for keyAttr in keyAttrs:
-            headerLabel_list.append(str(keyAttr))
-            attrValue=cmds.getAttr(obj+"."+keyAttr)
-            attrValue_list.append(str(attrValue))
-        return headerLabel_list,attrValue_list
-    
-    #Private Function
-    def __tableList_create_func(self,objs,add=False):
-        if not add:
-            self._table_lists=[]
-        for obj in objs:
-            self._headerLabel_list,attrValue_list=self.getKeyAttrs_query_list_list(obj)
-            self._table_lists.append(attrValue_list)
-            self.queryKeyAttr_CTableWidget.setHeaderLabelList(self._headerLabel_list)
-            self.queryKeyAttr_CTableWidget.setTableParamLists(self._table_lists)
-            self.queryKeyAttr_CTableWidget.createTable()
+    @staticmethod
+    def getKeyAttrs_query_strs_strs(node_str):
+        attrValue_strs=[]
+        attrValue_strs.append(node_str)
+        keyAttr_values=cmds.listAttr(node_str,k=True)
+        headerLabel_strs=["ObjectName"]
+        for keyAttr_value in keyAttr_values:
+            headerLabel_strs.append(str(keyAttr_value))
+            attrValue_value=cmds.getAttr(node_str+"."+keyAttr_value)
+            attrValue_strs.append(str(attrValue_value))
+        return headerLabel_strs,attrValue_strs
 
     #Public Function
-    def buttonLeftOnClicked(self):
+    def createSelectionTable(self,variables):
+        table_lists=[]
+        for node_str in variables:
+            self._headerLabel_strs,attrValue_strs=self.getKeyAttrs_query_strs_strs(node_str)
+            table_lists.append(attrValue_strs)
+            self.table_SelfTableWidget.setHeaderLabelStrs(self._headerLabel_strs)
+            self.table_SelfTableWidget.setDataTableWidgetLists(table_lists)
+            self.table_SelfTableWidget.createTable()
+
+    def editSelectionTabel(self,variables):
+        table_lists=self.table_SelfTableWidget.queryTableLists()
+        for node_str in variables:
+            self._headerLabel_strs,attrValue_strs=self.getKeyAttrs_query_strs_strs(node_str)
+            table_lists.append(attrValue_strs)
+            self.table_SelfTableWidget.setHeaderLabelStrs(self._headerLabel_strs)
+            self.table_SelfTableWidget.setDataTableWidgetLists(table_lists)
+            self.table_SelfTableWidget.createTable()
+    
+    def buttonLeftClicked(self):
         main()
 
-    def buttonCenterOnClicked(self):
-        objs=cmds.ls(sl=True)
-        self.__tableList_create_func(objs)
+    def buttonCenterClicked(self):
+        node_strs=cmds.ls(sl=True)
+        self.createSelectionTable(node_strs)
 
-    def buttonRightOnClicked(self):
-        objs=cmds.ls(sl=True)
-        self.__tableList_create_func(objs,add=True)
+    def buttonRightClicked(self):
+        node_strs=cmds.ls(sl=True)
+        self.editSelectionTabel(node_strs)
 
 def main():
     viewWindow=LookKeyWindow(parent=wLB.mayaMainWindow_query_QWidget())
-    viewWindow.buttonCenterOnClicked()
+    viewWindow.buttonCenterClicked()
     viewWindow.show()

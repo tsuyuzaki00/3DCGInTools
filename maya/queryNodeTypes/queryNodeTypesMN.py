@@ -1,7 +1,13 @@
 # -*- coding: iso-8859-15 -*-
-from PySide2.QtCore import *
-from PySide2.QtWidgets import *
-from PySide2.QtGui import *
+try:
+    from PySide2.QtCore import *
+    from PySide2.QtWidgets import *
+    from PySide2.QtGui import *
+except ImportError:
+    from PySide6.QtCore import *
+    from PySide6.QtWidgets import *
+    from PySide6.QtGui import *
+    
 import maya.cmds as cmds
 import maya.api.OpenMaya as om2
 import random
@@ -9,21 +15,24 @@ from maya.app.general.mayaMixin import MayaQWidgetDockableMixin
 
 import cgInTools as cit
 from ...ui import tableUI as UI
+from ...library import dataLB as dLB
+from ...library import jsonLB as jLB
 from ..library import windowLB as wLB
-from ...library import functionLB as fLB
 from ..library import checkLB as chLB
-cit.reloads([UI,wLB,fLB,chLB])
+cit.reloads([UI,dLB,jLB,wLB,chLB])
 
-DATAFOLDER="queryNodeTypes"
-RESETDIR,DATADIR=cit.checkScriptsData(DATAFOLDER,cit.mayaSettings_dir,cit.mayaData_dir)
+DATAFOLDER_STR="queryNodeTypes"
+RESET_DIR,DATA_DIR=cit.checkScriptsData(DATAFOLDER_STR,cit.maya_dir,cit.mayaData_dir)
 
 class QueryNodeTypeWindow(MayaQWidgetDockableMixin,UI.TableWindowBase):
     def __init__(self, parent):
+        self._setting_strs=[
+            "NodeTypeTable"
+        ]
         super(QueryNodeTypeWindow,self).__init__(parent)
-        self._dataFolder_str=DATAFOLDER
-        self._reset_dir=RESETDIR
-        self._data_dir=DATADIR
-        
+        self._dataFolder_str=DATAFOLDER_STR
+        self._reset_dir=RESET_DIR
+        self._data_dir=DATA_DIR
         
         windowTitle_str="queryNodeTypes"
         random_int=random.randint(0,9999)
@@ -41,10 +50,10 @@ class QueryNodeTypeWindow(MayaQWidgetDockableMixin,UI.TableWindowBase):
 
     #Single Function
     @staticmethod
-    def sameObjName_check_func(objs):
+    def sameObjName_check_func(node_strs):
         check=chLB.CheckBoolean()
-        for obj in objs:
-            check.setNode(obj)
+        for node_str in node_strs:
+            check.setNode(node_str)
             judge_dict=check.sameObjName()
             if judge_dict["bool"]:
                 #print("OK:"+" node:"+str(judge_dict["node"]))
@@ -53,15 +62,15 @@ class QueryNodeTypeWindow(MayaQWidgetDockableMixin,UI.TableWindowBase):
                 cmds.error("NG:"+"sameObjName node:"+str(judge_dict["node"]))
 
     @staticmethod
-    def addChilds_query_list(objs):
-        nodes=[]
-        for obj in objs:
-            nodes.append(obj)
-            shapes=cmds.listRelatives(obj,s=True)
-            if not shapes == None:
-                for shape in shapes:
-                    nodes.append(shape)
-        return nodes
+    def addShapes_query_strs(node_strs):
+        nodeAndShape_strs=[]
+        for node_str in node_strs:
+            nodeAndShape_strs.append(node_str)
+            shape_strs=cmds.listRelatives(node_str,s=True)
+            if not shape_strs == None:
+                for shape_str in shape_strs:
+                    nodeAndShape_strs.append(shape_str)
+        return nodeAndShape_strs
 
     @staticmethod
     def MFuType_query_str_int(node):
@@ -72,63 +81,108 @@ class QueryNodeTypeWindow(MayaQWidgetDockableMixin,UI.TableWindowBase):
         node_MObject=node_MSelectionList.getDependNode(0)
         return node_MObject.apiTypeStr,node_MObject.apiType()
 
-    #Private Function
-    def __setTableWidget_create_func(self,objs,add=False):
+    #Setting Function
+    def setNodeTypeTable(self,variables):
+        self.table_SelfTableWidget.setDataTableWidgetLists(variables)
+        self.table_SelfTableWidget.createTable()
+    def getNodeTypeTable(self):
+        tableWidgetItem_lists=self.table_SelfTableWidget.queryTableLists()
+        return tableWidgetItem_lists
+
+    #Public Function
+    def createSelectionTable(self,variables):
         table_lists=[]
-        if add:
-            table_lists=self.table_SelfTableWidget.queryTableLists()
-        nodes=self.addChilds_query_list(objs)
-        for node in nodes:
-            nodeType_str=cmds.nodeType(node)
-            MFnType_str,MFnTypeID_int=self.MFuType_query_str_int(node)
-            table_lists.append([node,nodeType_str,MFnType_str,str(MFnTypeID_int)])
+        node_strs=self.addShapes_query_strs(variables)
+        for node_str in node_strs:
+            nodeType_str=cmds.nodeType(node_str)
+            MFnType_str,MFnTypeID_int=self.MFuType_query_str_int(node_str)
+            table_lists.append([node_str,nodeType_str,MFnType_str,str(MFnTypeID_int)])
+        self.table_SelfTableWidget.setDataTableWidgetLists(table_lists)
+        self.table_SelfTableWidget.createTable()
+    
+    def editSelectionTable(self,variables):
+        table_lists=self.table_SelfTableWidget.queryTableLists()
+        node_strs=self.addShapes_query_strs(variables)
+        for node_str in node_strs:
+            nodeType_str=cmds.nodeType(node_str)
+            MFnType_str,MFnTypeID_int=self.MFuType_query_str_int(node_str)
+            table_lists.append([node_str,nodeType_str,MFnType_str,str(MFnTypeID_int)])
         self.table_SelfTableWidget.setDataTableWidgetLists(table_lists)
         self.table_SelfTableWidget.createTable()
 
-    def __getTableWidget_query_dict(self):
-        tableWidgetItem_lists=self.table_SelfTableWidget.queryTableLists()
-        return tableWidgetItem_lists
-    
-    #Public Function
     def refreshClicked(self):
-        settings_dict=fLB.readJson(cit.mayaData_dir,self._dataFolder_str)
-        self.__setTableWidget_create_func(settings_dict.get("tableLists"))
+        refresh_DataPath=dLB.DataPath()
+        refresh_DataPath.setAbsoluteDirectory(self._reset_dir)
+        refresh_DataPath.setFile("queryNodeTypesMN")
+        refresh_DataPath.setExtension("json")
+
+        settings_dict=self.importJson_query_dict(refresh_DataPath)
+        for _setting_str in self._setting_strs:
+            exec('self.set'+_setting_str+'(settings_dict.get("'+_setting_str+'"))')
 
     def restoreClicked(self):
-        data_dict=fLB.readJson(cit.mayaData_dir,self._dataFolder_str)
-        self.__setTableWidget_create_func(data_dict.get("tableLists"))
+        restore_DataPath=dLB.DataPath()
+        restore_DataPath.setAbsoluteDirectory(self._data_dir)
+        restore_DataPath.setFile("queryNodeTypesMN")
+        restore_DataPath.setExtension("json")
+
+        settings_dict=self.importJson_query_dict(restore_DataPath)
+        for _setting_str in self._setting_strs:
+            exec('self.set'+_setting_str+'(settings_dict.get("'+_setting_str+'"))')
 
     def saveClicked(self):
-        write_dict=self.__getTableWidget_query_dict()
-        fLB.writeJson(absolute=cit.mayaData_dir,relative=self._dataFolder_str,write=write_dict)
+        save_DataPath=dLB.DataPath()
+        save_DataPath.setAbsoluteDirectory(self._data_dir)
+        save_DataPath.setFile("queryNodeTypesMN")
+        save_DataPath.setExtension("json")
+
+        getValue_dict={}
+        for _setting_str in self._setting_strs:
+            getValue_value=eval('self.get'+_setting_str+'()')
+            getValue_dict[_setting_str]=getValue_value
+            
+        self.exportJson_create_func(save_DataPath,getValue_dict)
 
     def importClicked(self):
-        import_dict=wLB.mayaPathDialog_query_dict(text="import setting",fileMode=1,directory=self._data_dir)
-        if import_dict is None:
+        import_dir,import_file=wLB.mayaPathDialog_query_dir_file(text="import setting",fileMode=1,directory=self._data_dir)
+        if import_dir is None or import_file is None:
             return
-        data_dict=fLB.readJson(absolute=import_dict["directory"],file=import_dict["file"])
-        self.__setTableWidget_create_func(data_dict.get("tableLists"))
+        import_DataPath=dLB.DataPath()
+        import_DataPath.setAbsoluteDirectory(import_dir)
+        import_DataPath.setFile(import_file)
+        import_DataPath.setExtension("json")
+
+        settings_dict=self.importJson_query_dict(import_DataPath)
+        for _setting_str in self._setting_strs:
+            exec('self.set'+_setting_str+'(settings_dict.get("'+_setting_str+'"))')
 
     def exportClicked(self):
-        export_dict=wLB.mayaPathDialog_query_dict(text="export setting",fileMode=0,directory=self._data_dir)
-        if export_dict is None:
+        export_dir,export_file=wLB.mayaPathDialog_query_dir_file(text="export setting",fileMode=0,directory=self._data_dir)
+        if export_dir is None or export_file is None:
             return
-        write_dict=self.__getTableWidget_query_dict()
-        fLB.writeJson(absolute=export_dict["directory"],file=export_dict["file"],write=write_dict)
+        export_DataPath=dLB.DataPath()
+        export_DataPath.setAbsoluteDirectory(export_dir)
+        export_DataPath.setFile(export_file)
+        export_DataPath.setExtension("json")
+        
+        getValue_dict={}
+        for _setting_str in self._setting_strs:
+            getValue_value=eval('self.get'+_setting_str+'()')
+            getValue_dict[_setting_str]=getValue_value
+
+        self.exportJson_create_func(export_DataPath,getValue_dict)
 
     def buttonLeftClicked(self):
         main()
 
     def buttonCenterClicked(self):
-        objs=cmds.ls(sl=True)
-        self.sameObjName_check_func(objs)
-        self.__setTableWidget_create_func(objs)
+        node_strs=cmds.ls(sl=True)
+        self.createSelectionTable(node_strs)
 
     def buttonRightClicked(self):
-        objs=cmds.ls(sl=True)
-        self.sameObjName_check_func(objs)
-        self.__setTableWidget_create_func(objs,add=True)
-
+        node_strs=cmds.ls(sl=True)
+        self.editSelectionTable(node_strs)
+    
 def main():
     viewWindow=QueryNodeTypeWindow(parent=wLB.mayaMainWindow_query_QWidget())
     viewWindow.buttonCenterClicked()

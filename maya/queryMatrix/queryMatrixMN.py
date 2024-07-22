@@ -1,10 +1,14 @@
 # -*- coding: iso-8859-15 -*-
-from PySide2.QtCore import *
-from PySide2.QtWidgets import *
-from PySide2.QtGui import *
+try:
+    from PySide2.QtCore import *
+    from PySide2.QtWidgets import *
+    from PySide2.QtGui import *
+except ImportError:
+    from PySide6.QtCore import *
+    from PySide6.QtWidgets import *
+    from PySide6.QtGui import *
 
-import os
-from maya import cmds
+import maya.cmds as cmds
 
 import cgInTools as cit
 from ...ui import tableUI as UI
@@ -20,9 +24,8 @@ class LookMatrixWindow(UI.TableWindowBase):
         self.buttonCenter_QPushButton.setText("Select Replace")
         self.buttonRight_QPushButton.setText("Select Add")
 
-        self.queryMatrix_CTableWidget=UI.CTableWidget()
-        self.custom_QGridLayout.addWidget(self.queryMatrix_CTableWidget)
-        self.queryMatrix_CTableWidget.setHeaderLabelList([
+        self.table_SelfTableWidget.setHeaderReverseBool(True)
+        self.table_SelfTableWidget.setHeaderLabelStrs([
             "ObjectName",
             "NormalMatrixX","NormalMatrixY","NormalMatrixZ","NormalMatrixT",
             "worldMatrixX","worldMatrixY","worldMatrixZ","worldMatrixT",
@@ -32,13 +35,15 @@ class LookMatrixWindow(UI.TableWindowBase):
             "InverseWorldMatrixX","InverseWorldMatrixY","InverseWorldMatrixZ","InverseWorldMatrixT",
             "InverseParentMatrixX","InverseParentMatrixY","InverseParentMatrixZ","InverseParentMatrixT",
             "OffsetParentMatrixX","OffsetParentMatrixY","OffsetParentMatrixZ","OffsetParentMatrixT"
-            ])
-        self.queryMatrix_CTableWidget.setHeaderAsixStr("Vertical")# Horizontal or Vertical
-        self.queryMatrix_CTableWidget.createBase()
+        ])
+        self.table_SelfTableWidget.createBase()
+        geometry=self.table_SelfTableWidget.geometry()
+        self.setGeometry(geometry)
 
     #Single Function
-    def getMatrix_query_list(self,obj):
-        getAttrs=[
+    @staticmethod
+    def nodeMatrix_query_strs(node_str):
+        getAttr_strs=[
             "matrix",
             "worldMatrix",
             "parentMatrix",
@@ -48,37 +53,43 @@ class LookMatrixWindow(UI.TableWindowBase):
             "parentInverseMatrix",
             "offsetParentMatrix"
         ]
-        matrix_list=[]
-        matrix_list.append(obj)
-        for getAttr in getAttrs:
-            getMatrix=cmds.getAttr(obj+"."+getAttr)
-            for num in range(0,13,4):
-                matrix_list.append(str(getMatrix[num])+", "+str(getMatrix[num+1])+", "+str(getMatrix[num+2])+", "+str(getMatrix[num+3]))
-        return matrix_list
-
-    #Private Function
-    def __tableList_create_func(self,objs,add=False):
-        if not add:
-            self._table_lists=[]
-        for obj in objs:
-            matrix_list=self.getMatrix_query_list(obj)
-            self._table_lists.append(matrix_list)
-            self.queryMatrix_CTableWidget.setTableParamLists(self._table_lists)
-            self.queryMatrix_CTableWidget.createTable()
-
+        matrix_strs=[]
+        matrix_strs.append(node_str)
+        for getAttr_str in getAttr_strs:
+            getMatrix_floats=cmds.getAttr(node_str+"."+getAttr_str)
+            for i in range(0,13):
+                matrix_strs.append(str(getMatrix_floats[i]))
+        return matrix_strs
+    
     #Public Function
-    def buttonLeftOnClicked(self):
+    def createSelectionTable(self,variables):
+        table_lists=[]
+        for node_str in variables:
+            matrix_strs=self.nodeMatrix_query_strs(node_str)
+            table_lists.append(matrix_strs)
+            self.table_SelfTableWidget.setDataTableWidgetLists(table_lists)
+            self.table_SelfTableWidget.createTable()
+    
+    def editSelectionTable(self,variables):
+        table_lists=self.table_SelfTableWidget.queryTableLists()
+        for node_str in variables:
+            matrix_strs=self.nodeMatrix_query_strs(node_str)
+            table_lists.append(matrix_strs)
+            self.table_SelfTableWidget.setDataTableWidgetLists(table_lists)
+            self.table_SelfTableWidget.createTable()
+
+    def buttonLeftClicked(self):
         main()
 
-    def buttonCenterOnClicked(self):
-        objs=cmds.ls(sl=True)
-        self.__tableList_create_func(objs)
+    def buttonCenterClicked(self):
+        node_strs=cmds.ls(sl=True)
+        self.createSelectionTable(node_strs)
 
-    def buttonRightOnClicked(self):
-        objs=cmds.ls(sl=True)
-        self.__tableList_create_func(objs,add=True)
+    def buttonRightClicked(self):
+        node_strs=cmds.ls(sl=True)
+        self.editSelectionTable(node_strs)
 
 def main():
     viewWindow=LookMatrixWindow(parent=wLB.mayaMainWindow_query_QWidget())
-    viewWindow.buttonCenterOnClicked()
+    viewWindow.buttonCenterClicked()
     viewWindow.show()

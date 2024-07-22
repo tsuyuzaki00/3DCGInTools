@@ -32,13 +32,15 @@ class AutoNodeRenameOP(UI.AutoNodeRenameBase):
         self._data_dir=DATA_DIR
 
     #Single Function
-    def importJson_query_dict(self,dataPath):
+    @staticmethod
+    def importJson_query_dict(dataPath):
         setting=jLB.AppJson()
         setting.setDataPath(dataPath)
         settings_dict=setting.read()
         return settings_dict
     
-    def exportJson_create_func(self,dataPath,switch,custom,title,node,side,orders):
+    @staticmethod
+    def exportJson_create_func(dataPath,switch,custom,title,node,side,orders):
         write_dict={
             "ModeSwitch":switch,
             "CustomText":custom,
